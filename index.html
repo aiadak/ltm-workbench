@@ -16,7 +16,10 @@
   .agent-card { transition: all .2s ease; cursor: pointer; }
   .agent-card:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(15,18,22,.12); border-color: var(--travelers-red); }
   .agent-card.active { border-color: var(--travelers-red); box-shadow: 0 10px 40px rgba(184,35,42,.18); }
-  .agent-card.done { opacity: .6; }
+  .agent-card.active .agent-title { color: var(--travelers-red); }
+  .agent-card.pulse { animation: cardPulse 2s ease-in-out infinite; }
+  @keyframes cardPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(184,35,42,.35); } 50% { box-shadow: 0 0 0 12px rgba(184,35,42,0); } }
+  .agent-card.done { opacity: .65; }
   .agent-card.done .agent-title::after { content: ' ✓'; color: #16a34a; }
   .kpi-card { border-left: 4px solid var(--travelers-red); }
   .pill { display: inline-flex; align-items: center; gap: .35rem; padding: .15rem .55rem; font-size: .7rem; font-weight: 600; border-radius: 999px; letter-spacing: .02em; }
@@ -26,8 +29,8 @@
   .pill-hitl { background: #fef3c7; color: #92400e; }
   .pill-draft { background: #fee2e2; color: #991b1b; }
   .tab-btn.active { border-color: var(--travelers-red); color: var(--travelers-red); }
-  .pulse-btn { animation: pulseBtn 1.4s ease-in-out infinite; }
-  @keyframes pulseBtn { 0%,100% { box-shadow: 0 0 0 0 rgba(184,35,42,.45); } 50% { box-shadow: 0 0 0 10px rgba(184,35,42,0); } }
+  .run-btn { animation: runPulse 2.5s ease-in-out infinite; }
+  @keyframes runPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(184,35,42,.5); } 50% { box-shadow: 0 0 0 14px rgba(184,35,42,0); } }
   .progress-bar { transition: width .45s ease; background: var(--travelers-red); }
   .umbrella { width: 34px; height: 34px; display: inline-block; vertical-align: middle; }
   code, pre { font-family: 'JetBrains Mono', ui-monospace, monospace; }
@@ -53,18 +56,18 @@
       </div>
     </div>
     <nav class="flex items-center gap-1">
-      <button class="tab-btn active px-4 py-2 border-b-2 border-transparent text-sm font-medium text-white" data-tab="overview">Overview</button>
+      <button class="tab-btn active px-4 py-2 border-b-2 border-transparent text-sm font-medium text-white" data-tab="dashboard">Agent Dashboard</button>
       <button class="tab-btn px-4 py-2 border-b-2 border-transparent text-sm font-medium text-gray-300" data-tab="map">System Map</button>
     </nav>
-    <div class="text-xs text-gray-400">v9 · Unified experience</div>
+    <div class="text-xs text-gray-400">v10 · Unified + Reactive</div>
   </div>
 </header>
 
 <main class="max-w-7xl mx-auto px-6 py-8">
 
-  <section id="tab-overview" class="tab-panel">
+  <section id="tab-dashboard" class="tab-panel">
 
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
       <div class="kpi-card bg-white p-5 rounded-lg shadow-sm"><div class="text-xs uppercase tracking-wider text-gray-500">SMEs Interviewed</div><div class="font-serif text-4xl font-bold mt-1">47</div><div class="text-xs text-green-700 mt-1">+3 this month</div></div>
       <div class="kpi-card bg-white p-5 rounded-lg shadow-sm"><div class="text-xs uppercase tracking-wider text-gray-500">Sessions Completed</div><div class="font-serif text-4xl font-bold mt-1">189</div><div class="text-xs text-green-700 mt-1">+18 this week</div></div>
       <div class="kpi-card bg-white p-5 rounded-lg shadow-sm"><div class="text-xs uppercase tracking-wider text-gray-500">Playbooks Finalized</div><div class="font-serif text-4xl font-bold mt-1">32</div><div class="text-xs text-green-700 mt-1">+4 this month</div></div>
@@ -72,14 +75,17 @@
       <div class="kpi-card bg-white p-5 rounded-lg shadow-sm"><div class="text-xs uppercase tracking-wider text-gray-500">Trainees Coached</div><div class="font-serif text-4xl font-bold mt-1">84</div><div class="text-xs text-green-700 mt-1">+11 this week</div></div>
     </div>
 
-    <div class="flex items-baseline justify-between mb-2">
-      <h2 class="font-serif text-3xl">Twelve agents · four pillars</h2>
-      <div class="text-xs text-gray-500"><span id="progress-label">0 of 12 activated</span></div>
+    <div class="bg-white rounded-lg shadow-sm p-5 mb-6 flex items-center justify-between gap-6">
+      <div>
+        <h2 class="font-serif text-2xl">Twelve agents · four pillars</h2>
+        <p class="text-sm text-gray-600 mt-1 max-w-2xl">Click <b>Run pipeline</b> to start at the first agent. Each REAL agent (Archivist, Extractor, Graph Builder, Playbook Composer, Coach) makes a live Claude call. Uploads on Archivist and Coach flow downstream.</p>
+      </div>
+      <div class="flex flex-col items-end gap-2 min-w-[220px]">
+        <button id="run-pipeline" class="run-btn bg-brand-red text-white px-6 py-3 rounded-md text-sm font-semibold whitespace-nowrap">▶ Run pipeline</button>
+        <div class="text-xs text-gray-500" id="progress-label">0 of 12 activated</div>
+        <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden"><div id="progress" class="progress-bar h-full" style="width:0%"></div></div>
+      </div>
     </div>
-    <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden mb-4">
-      <div id="progress" class="progress-bar h-full" style="width:0%"></div>
-    </div>
-    <p class="text-gray-600 max-w-3xl mb-6">Click any agent to run it live and see its output. Then use <b>Next agent</b> to advance the pipeline — the whole story unfolds in one page.</p>
 
     <div id="pillar-grid" class="space-y-8"></div>
   </section>
@@ -101,37 +107,38 @@
 </main>
 
 <footer class="max-w-7xl mx-auto px-6 py-8 text-xs text-gray-500 text-center border-t mt-16">
-  Travelers · LTM Workbench · v9 · Capture &rarr; Structure &rarr; Validate &rarr; Activate.
+  Travelers · LTM Workbench · v10 · Capture &rarr; Structure &rarr; Validate &rarr; Activate.
 </footer>
 
 <script>
 const AGENTS = [
-  { id: "observer", pillar: 1, pillarName: "Capture", build: "MOCK", autonomy: "AUTO", displayName: "Observer", tagline: "Behavioral capture — screen traces of expert work." },
-  { id: "interviewer", pillar: 1, pillarName: "Capture", build: "MOCK", autonomy: "HITL", displayName: "Interviewer", tagline: "Weekly sessions — questions from what the SME hasn't yet explained." },
-  { id: "archivist", pillar: 1, pillarName: "Capture", build: "REAL", autonomy: "AUTO", displayName: "Archivist", tagline: "Sweeps Jira, ServiceNow, Confluence, Teams for the SME's 24 months of work.", apiCall: "/api/archivist" },
-  { id: "extractor", pillar: 2, pillarName: "Structure", build: "REAL", autonomy: "AUTO", displayName: "Extractor", tagline: "Strict-JSON extraction — every item source-cited.", apiCall: "/api/extract" },
-  { id: "graph", pillar: 2, pillarName: "Structure", build: "REAL", autonomy: "AUTO", displayName: "Graph Builder", tagline: "Sonnet proposes typed nodes + labeled edges from Extractor JSON.", apiCall: "/api/graph" },
-  { id: "playbook", pillar: 2, pillarName: "Structure", build: "REAL", autonomy: "AUTO", displayName: "Playbook Composer", tagline: "Sonnet drafts SOPs, resolved-tickets, scenarios, exceptions. Always DRAFT.", apiCall: "/api/playbook" },
-  { id: "scenario", pillar: 3, pillarName: "Validate", build: "MOCK", autonomy: "AUTO", displayName: "Scenario", tagline: "Generated test cases (Easy / Medium / Hard) grounded in the ticket corpus." },
-  { id: "reviewer", pillar: 3, pillarName: "Validate", build: "REAL", autonomy: "HITL", displayName: "Reviewer Copilot", tagline: "Approve / Edit / Reject — Edit re-prompts Claude live.", apiCall: "/api/reprompt" },
-  { id: "analysis", pillar: 3, pillarName: "Validate", build: "MOCK", autonomy: "AUTO", displayName: "Analysis", tagline: "Confidence, coverage gaps, scheduled follow-ups." },
-  { id: "planner", pillar: 4, pillarName: "Activate", build: "MOCK", autonomy: "AUTO", displayName: "Planner", tagline: "30 / 60 / 90-day onboarding roadmap for the trainee." },
-  { id: "coach", pillar: 4, pillarName: "Activate", build: "REAL", autonomy: "AUTO", displayName: "Coach", tagline: "Questions + micro-lessons from uploaded documents.", apiCall: "/api/coach" },
-  { id: "copilot", pillar: 4, pillarName: "Activate", build: "MOCK", autonomy: "AUTO", displayName: "Knowledge Copilot", tagline: "Proactive + reactive assist in the live workbench — ~6 min ETA." }
+  { id:"observer", pillar:1, pillarName:"Capture", build:"MOCK", autonomy:"AUTO", displayName:"Observer", tagline:"Behavioral capture — screen traces of expert work." },
+  { id:"interviewer", pillar:1, pillarName:"Capture", build:"MOCK", autonomy:"HITL", displayName:"Interviewer", tagline:"Weekly sessions — questions from what the SME hasn't yet explained." },
+  { id:"archivist", pillar:1, pillarName:"Capture", build:"REAL", autonomy:"AUTO", displayName:"Archivist", tagline:"Sweeps Jira (live), Confluence (upload), ServiceNow (synthetic), Teams (upload).", apiCall:"/api/archivist" },
+  { id:"extractor", pillar:2, pillarName:"Structure", build:"REAL", autonomy:"AUTO", displayName:"Extractor", tagline:"Reads Archivist output. Haiku extracts rules + heuristics with source citations.", apiCall:"/api/extract" },
+  { id:"graph", pillar:2, pillarName:"Structure", build:"REAL", autonomy:"AUTO", displayName:"Graph Builder", tagline:"Sonnet proposes typed nodes + labeled edges from Extractor JSON.", apiCall:"/api/graph" },
+  { id:"playbook", pillar:2, pillarName:"Structure", build:"REAL", autonomy:"AUTO", displayName:"Playbook Composer", tagline:"Sonnet drafts SOPs, resolved-tickets, scenarios, exceptions. Always DRAFT.", apiCall:"/api/playbook" },
+  { id:"scenario", pillar:3, pillarName:"Validate", build:"MOCK", autonomy:"AUTO", displayName:"Scenario", tagline:"Generated test cases (Easy / Medium / Hard) grounded in the ticket corpus." },
+  { id:"reviewer", pillar:3, pillarName:"Validate", build:"REAL", autonomy:"HITL", displayName:"Reviewer Copilot", tagline:"Approve / Edit / Reject — Edit re-prompts Claude live.", apiCall:"/api/reprompt" },
+  { id:"analysis", pillar:3, pillarName:"Validate", build:"MOCK", autonomy:"AUTO", displayName:"Analysis", tagline:"Confidence, coverage gaps, scheduled follow-ups." },
+  { id:"planner", pillar:4, pillarName:"Activate", build:"MOCK", autonomy:"AUTO", displayName:"Planner", tagline:"30 / 60 / 90-day onboarding roadmap for the trainee." },
+  { id:"coach", pillar:4, pillarName:"Activate", build:"REAL", autonomy:"AUTO", displayName:"Coach", tagline:"Reacts to uploaded docs — generates questions + micro-lessons.", apiCall:"/api/coach" },
+  { id:"copilot", pillar:4, pillarName:"Activate", build:"MOCK", autonomy:"AUTO", displayName:"Knowledge Copilot", tagline:"Proactive + reactive assist in the live workbench — ~6 min ETA." }
 ];
 
 const PILLARS = [
-  { n: 1, name: "Capture", desc: "Behavioral · Conversational · Archival" },
-  { n: 2, name: "Structure", desc: "Extraction · Graph · Playbook" },
-  { n: 3, name: "Validate", desc: "Scenario · Review · Analysis" },
-  { n: 4, name: "Activate", desc: "Planner · Coach · Copilot" }
+  { n:1, name:"Capture", desc:"Behavioral · Conversational · Archival" },
+  { n:2, name:"Structure", desc:"Extraction · Graph · Playbook" },
+  { n:3, name:"Validate", desc:"Scenario · Review · Analysis" },
+  { n:4, name:"Activate", desc:"Planner · Coach · Copilot" }
 ];
 
 const state = { active: null, done: new Set() };
+const pipeline = { archivist: null, extraction: null, graph: null, playbook: null };
 
 const $ = s => document.querySelector(s);
 const $$ = s => Array.from(document.querySelectorAll(s));
-const pill = (t, k) => `<span class="pill pill-${k}">${t}</span>`;
+const pill = (t,k) => `<span class="pill pill-${k}">${t}</span>`;
 
 function showTab(name) {
   $$('.tab-panel').forEach(p => p.classList.add('hidden'));
@@ -141,12 +148,12 @@ function showTab(name) {
   if (btn) { btn.classList.add('active','text-white'); btn.classList.remove('text-gray-300'); }
 }
 $$('.tab-btn').forEach(b => b.addEventListener('click', () => showTab(b.dataset.tab)));
-document.getElementById('header-home').addEventListener('click', () => { state.active = null; state.done = new Set(); showTab('overview'); render(); });
+document.getElementById('header-home').addEventListener('click', () => { state.active = null; state.done = new Set(); showTab('dashboard'); render(); });
+document.getElementById('run-pipeline').addEventListener('click', () => { state.done = new Set(); activate(AGENTS[0].id); setTimeout(() => document.querySelector(`[data-agent-card="${AGENTS[0].id}"]`)?.scrollIntoView({behavior:'smooth',block:'center'}), 100); });
 
 function updateProgress() {
   const n = state.done.size;
-  const pct = Math.round((n / AGENTS.length) * 100);
-  document.getElementById('progress').style.width = pct + '%';
+  document.getElementById('progress').style.width = Math.round((n/AGENTS.length)*100) + '%';
   document.getElementById('progress-label').textContent = `${n} of ${AGENTS.length} activated`;
 }
 
@@ -160,11 +167,11 @@ function render() {
         <div class="text-xs text-gray-500">${p.desc}</div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        ${agents.map(a => renderCard(a)).join('')}
+        ${agents.map(renderCard).join('')}
       </div>
     </div>`;
   }).join('');
-  $$('#pillar-grid [data-agent-card]').forEach(el => el.addEventListener('click', (e) => {
+  $$('#pillar-grid [data-agent-card]').forEach(el => el.addEventListener('click', e => {
     if (e.target.closest('.no-toggle')) return;
     activate(el.dataset.agentCard);
   }));
@@ -175,7 +182,7 @@ function renderCard(a) {
   const isActive = state.active === a.id;
   const isDone = state.done.has(a.id);
   const cls = ['agent-card','bg-white','p-5','rounded-lg','shadow-sm','border','border-gray-200'];
-  if (isActive) cls.push('active','md:col-span-3');
+  if (isActive) cls.push('active','pulse','md:col-span-3');
   if (isDone && !isActive) cls.push('done');
   return `<div class="${cls.join(' ')}" data-agent-card="${a.id}">
     <div class="flex items-start justify-between mb-3">
@@ -189,41 +196,76 @@ function renderCard(a) {
 }
 
 async function activate(id) {
-  if (state.active === id) {
-    // Already active — clicking again collapses
-    state.done.add(id);
-    state.active = null;
-    render();
-    return;
-  }
+  if (state.active === id) { state.done.add(id); state.active = null; render(); return; }
   state.active = id;
   render();
   const a = AGENTS.find(x => x.id === id);
   const scene = document.getElementById(`scene-${id}`);
   if (!scene) return;
   scene.innerHTML = await renderSceneBody(a);
-  // Add Next button
   const idx = AGENTS.findIndex(x => x.id === id);
   const nextAgent = AGENTS[idx + 1];
   const btnRow = document.createElement('div');
   btnRow.className = 'no-toggle mt-4 flex items-center gap-3 justify-end';
   const marker = a.autonomy === 'HITL' ? '<span class="pill pill-hitl">HITL · your review needed</span>' : '<span class="pill pill-auto">AUTO</span>';
   const nextLabel = nextAgent ? `Next → ${nextAgent.displayName}` : 'Finish';
-  const cls = a.autonomy === 'HITL' ? 'pulse-btn bg-brand-red text-white' : 'bg-gray-900 text-white hover:bg-brand-red';
-  btnRow.innerHTML = `${marker}<button class="${cls} px-5 py-2 rounded-md text-sm font-semibold no-toggle">${nextLabel}</button>`;
+  const cls2 = a.autonomy === 'HITL' ? 'bg-brand-red text-white' : 'bg-gray-900 text-white hover:bg-brand-red';
+  btnRow.innerHTML = `${marker}<button class="${cls2} px-5 py-2 rounded-md text-sm font-semibold no-toggle">${nextLabel}</button>`;
   scene.appendChild(btnRow);
-  btnRow.querySelector('button').onclick = (e) => {
+  btnRow.querySelector('button').onclick = e => {
     e.stopPropagation();
     state.done.add(id);
-    if (nextAgent) {
-      activate(nextAgent.id);
-      setTimeout(() => document.querySelector(`[data-agent-card="${nextAgent.id}"]`)?.scrollIntoView({ behavior:'smooth', block:'start' }), 100);
-    } else {
-      state.active = null;
-      render();
-    }
+    if (nextAgent) { activate(nextAgent.id); setTimeout(() => document.querySelector(`[data-agent-card="${nextAgent.id}"]`)?.scrollIntoView({behavior:'smooth',block:'center'}), 100); }
+    else { state.active = null; render(); }
   };
 }
+
+// Session-scoped uploads
+function getUploads(key) { try { return JSON.parse(sessionStorage.getItem('ltm_uploads_'+key) || 'null'); } catch { return null; } }
+function setUploads(key, v) { sessionStorage.setItem('ltm_uploads_'+key, JSON.stringify(v)); }
+
+function parseTeamsText(txt) {
+  const messages = [];
+  const re = /(?:\*\*)?([A-Z][A-Za-z.\-' ]+?)(?:\*\*)?\s*(?:\*)?\[(\d{4}-\d{2}-\d{2})\](?:\*)?\s*:\s*([\s\S]*?)(?=\n\s*(?:\*\*)?[A-Z][A-Za-z.\-' ]+?(?:\*\*)?\s*(?:\*)?\[\d{4}-\d{2}-\d{2}\]|$)/g;
+  let m, idx = 0;
+  while ((m = re.exec(txt)) !== null) {
+    messages.push({ id: String(1750000000000 + idx*3600000), createdDateTime: `${m[2]}T09:00:00Z`,
+      from: { user: { displayName: m[1].trim() } }, body: { contentType:'html', content:'<p>'+m[3].trim().replace(/\n+/g,' ')+'</p>' } });
+    idx++;
+  }
+  return { meta:{ source:'Teams (uploaded text)', total:messages.length }, messages };
+}
+
+// Upload handlers for Archivist and Coach
+document.addEventListener('change', e => {
+  if (e.target.id === 'archivist-upload') {
+    const files = Array.from(e.target.files || []);
+    Promise.all(files.map(f => f.text().then(txt => {
+      const name = f.name.toLowerCase();
+      if (name.endsWith('.json')) { try { return { name:f.name, data:JSON.parse(txt) }; } catch { return null; } }
+      if (name.endsWith('.txt') || name.endsWith('.md')) { return { name:f.name, data:parseTeamsText(txt) }; }
+      return null;
+    }))).then(parsed => {
+      const store = getUploads('archivist') || {};
+      parsed.filter(Boolean).forEach(p => {
+        const d = p.data;
+        if (d.result) store.servicenow = d;
+        else if (d.messages) store.teams = d;
+        else if (d.results) store.confluence = d;
+      });
+      setUploads('archivist', store);
+      if (state.active === 'archivist') activate('archivist');
+    });
+  }
+  if (e.target.id === 'coach-upload') {
+    const files = Array.from(e.target.files || []);
+    Promise.all(files.map(f => f.text().then(content => ({ name:f.name, content })))).then(docs => {
+      const prior = getUploads('coach') || [];
+      setUploads('coach', [...prior, ...docs]);
+      if (state.active === 'coach') activate('coach');
+    });
+  }
+});
 
 async function renderSceneBody(a) {
   switch (a.id) {
@@ -235,62 +277,125 @@ async function renderSceneBody(a) {
     case 'interviewer':
       return `<div class="bg-gray-50 p-3 rounded text-sm space-y-2">
           <p><b>Interviewer:</b> How do you know it's panel-cause from the first notice?</p>
-          <p><b>Mike:</b> The language. "Popping sound before smoke," "lights flickered," fire concentrated at the electrical service entrance. You develop an ear for it.</p>
+          <p><b>Mike:</b> The language. "Popping sound before smoke," "lights flickered," fire concentrated at the electrical service entrance.</p>
           <p><b>Interviewer:</b> When do you decide to reserve rights?</p>
-          <p><b>Mike:</b> Prior loss plus 4A plus a panel signature — I reserve rights every time. Because 4A dwelling extension opens the exposure so wide I need the option.</p>
+          <p><b>Mike:</b> Prior loss plus 4A plus a panel signature — I reserve rights every time.</p>
         </div>`;
-    case 'archivist':
-      return await liveCall('/api/archivist', d => `<p class="text-sm mb-3">Sweep complete. <b>${d.corpus_summary?.total_tickets || 30}</b> records normalized from ${(d.sources_swept||[]).length} sources for ${d.sme_name||'Mike'}.</p>
-        <div class="grid grid-cols-4 gap-2 text-xs">${(d.sources_swept||[]).map(s => `<div class="border rounded p-2 bg-white"><b>${s.name}</b><div class="mt-1">${s.records || 0} records</div><div class="text-gray-500 mt-1 text-[10px]">${s.status}</div></div>`).join('')}</div>`);
-    case 'extractor':
-      return await liveCall('/api/extract', d => `<p class="text-sm mb-2">Structured extraction from ticket + transcript.</p>
+    case 'archivist': {
+      const uploads = getUploads('archivist') || {};
+      const uploadedList = Object.keys(uploads).length ? Object.keys(uploads).map(k => `${k} (${(uploads[k].result?.length || uploads[k].messages?.length || uploads[k].results?.length || 0)} recs)`).join(', ') : 'none yet';
+      const body = { uploads };
+      const scene = await liveCallWithBody('/api/archivist', body, d => `
+        <p class="text-sm mb-3">Sweep complete. <b>${d.corpus_summary?.total_tickets || 30}</b> records normalized from <b>${(d.sources_swept||[]).length}</b> sources for <b>${d.sme_name||'Mike Karolczak'}</b>.</p>
+        <div class="grid grid-cols-4 gap-2 text-xs mb-4">${(d.sources_swept||[]).map(s => `<div class="border rounded p-2 bg-white"><b>${s.name}</b>${s.status==='connected'?' <span class="pill pill-real">LIVE</span>':''}<div class="mt-1">${s.records || 0} recs</div><div class="text-gray-500 mt-1 text-[10px]">${s.status}</div></div>`).join('')}</div>`);
+      return scene + `
+        <details class="mt-3 bg-blue-50 border-l-4 border-blue-500 rounded-r p-3 text-xs no-toggle" onclick="event.stopPropagation()">
+          <summary class="cursor-pointer font-semibold text-blue-900">📁 Files you can upload here</summary>
+          <div class="mt-2 space-y-2 text-blue-900">
+            <div><b>Jira</b> — LIVE from your Atlassian workspace (project=KAN). No upload needed. See <a href="/demo/JIRA_ISSUES.md" target="_blank" class="underline">JIRA_ISSUES.md</a> for what to create in Jira.</div>
+            <div><b>Confluence</b> — LIVE from your space (Workbench_SME) OR upload extra pages. Sample: <a href="/demo/confluence-extra-pages.json" target="_blank" class="underline">confluence-extra-pages.json</a></div>
+            <div><b>ServiceNow</b> — auto-loaded from fixtures. Upload to replace: <a href="/demo/servicenow-fire-claims.json" target="_blank" class="underline">servicenow-fire-claims.json</a></div>
+            <div><b>Teams transcripts</b> — upload as <code>.txt</code> or <code>.md</code>. Format: <code>Name [YYYY-MM-DD]: message</code>. Sample: <a href="/demo/teams-mike-thread.txt" target="_blank" class="underline">teams-mike-thread.txt</a> · <a href="/demo/teams-mike-thread.md" target="_blank" class="underline">teams-mike-thread.md</a></div>
+          </div>
+          <div class="mt-3 pt-3 border-t border-blue-200">
+            <label class="block font-semibold text-blue-900 mb-1">Upload files (persist for this session):</label>
+            <input type="file" id="archivist-upload" accept=".json,.txt,.md" multiple class="text-xs no-toggle" onclick="event.stopPropagation()"/>
+            <div class="text-blue-800 mt-1">Currently uploaded: ${uploadedList}</div>
+          </div>
+        </details>`;
+    }
+    case 'extractor': {
+      const body = { archivist: pipeline.archivist };
+      return await liveCallWithBody('/api/extract', body, d => { pipeline.extraction = d; return `<p class="text-sm mb-2">Structured extraction from Archivist output. Every item source-cited.</p>
         <div class="grid grid-cols-2 gap-3 text-xs">
           <div><b>Decision rules (${d.decision_rules?.length||0})</b>${(d.decision_rules||[]).slice(0,3).map(r => `<div class="bg-gray-50 p-2 mt-2 rounded"><b>if</b> ${r.if}<br/><b>then</b> ${r.then}<div class="text-gray-500 mt-1">source: ${r.source}</div></div>`).join('')}</div>
           <div><b>Heuristics (${d.heuristics?.length||0})</b>${(d.heuristics||[]).slice(0,3).map(h => `<div class="bg-gray-50 p-2 mt-2 rounded italic">"${h.text}"<div class="not-italic text-gray-500 mt-1">${h.source}</div></div>`).join('')}</div>
-        </div>`);
-    case 'graph':
-      return await liveCall('/api/graph', d => `<p class="text-sm mb-2">Typed knowledge graph: <b>${d.meta?.nodes||34} nodes</b> · <b>${d.meta?.edges||61} edges</b> · avg confidence ${(d.meta?.confidence_avg||0.87).toFixed(2)}</p>
+        </div>
+        ${d.exception_patterns?.length ? `<div class="mt-3 text-xs"><b>Exception patterns (${d.exception_patterns.length})</b>${d.exception_patterns.slice(0,2).map(e => `<div class="bg-amber-50 border-l-4 border-amber-400 p-2 mt-2"><b>${e.pattern}</b><div class="text-gray-600 mt-1">→ ${e.resolution}</div></div>`).join('')}</div>` : ''}`; });
+    }
+    case 'graph': {
+      const body = { extraction: pipeline.extraction };
+      return await liveCallWithBody('/api/graph', body, d => { pipeline.graph = d; return `<p class="text-sm mb-2">Typed knowledge graph: <b>${d.meta?.nodes||34} nodes</b> · <b>${d.meta?.edges||61} edges</b> · avg confidence ${(d.meta?.confidence_avg||0.87).toFixed(2)}</p>
         <div class="bg-gray-50 p-3 rounded text-xs">
           <div><b>Node types:</b> Claim, Rule, Exception, Person, Action, Entity</div>
           <div class="mt-1"><b>Edge types:</b> hasLossType, coveredBy, hasEndorsement, triggers, guardedBy, defines, requires, authoredBy, approvedBy, resolvesWith</div>
-          <div class="mt-2"><b>Sample:</b> Fire Claim → coveredBy → HO-3; HO-3 → hasEndorsement → 4A; (4A + Prior Loss + Panel-cause) → triggers → ROR Rule; ROR Rule → defines → Reserve Discipline</div>
-        </div>`);
-    case 'playbook':
-      return await liveCall('/api/playbook', d => `<div class="flex items-center justify-between mb-3"><div><div class="font-serif text-lg">${d.title||'Playbook'}</div><div class="text-xs text-gray-500">v${d.version||'2.0'} · author: ${d.author_sme||'Mike'}</div></div>${pill(d.status||'DRAFT','draft')}</div>
+          <div class="mt-2"><b>Sample edges:</b></div>
+          <ul class="ml-4 list-disc mt-1">${(d.edges||[]).slice(0,6).map(e => `<li>${e.from} <span class="text-gray-500">--${e.label}--&gt;</span> ${e.to} <span class="text-gray-400">(${e.confidence?.toFixed(2)||'0.9'}${e.solid===false?' inferred':''})</span></li>`).join('')}</ul>
+        </div>`; });
+    }
+    case 'playbook': {
+      const trail = JSON.parse(sessionStorage.getItem('ltm_approval_trail') || '[]');
+      const body = { extraction: pipeline.extraction, approvalTrail: trail };
+      return await liveCallWithBody('/api/playbook', body, d => { pipeline.playbook = d; return `
+        <div class="flex items-center justify-between mb-3">
+          <div><div class="font-serif text-lg">${d.title||'Playbook'}</div><div class="text-xs text-gray-500">v${d.version||'2.0'} · author: ${d.author_sme||'Mike Karolczak'}</div></div>
+          ${pill(d.status||'DRAFT','draft')}
+        </div>
+        <div class="text-xs uppercase text-gray-500 font-semibold mb-2">Applicability</div>
+        <ul class="text-xs mb-3 space-y-1">${(d.applicability||[]).slice(0,4).map(x => `<li>· ${x}</li>`).join('')}</ul>
         <div class="text-xs uppercase text-gray-500 font-semibold mb-2">SOPs (${(d.sops||[]).length})</div>
-        <div class="space-y-2">${(d.sops||[]).slice(0,4).map(s => `<div class="bg-white border rounded p-2 text-sm"><b>SOP #${s.n} — ${s.title}</b><div class="text-xs text-gray-600 mt-1">${s.rationale||''}</div></div>`).join('')}</div>
-        ${d.reserve_guidance ? `<div class="mt-3 bg-amber-50 p-2 rounded text-xs"><b>Reserve first-cut:</b> $${d.reserve_guidance.first_cut.low.toLocaleString()}–$${d.reserve_guidance.first_cut.high.toLocaleString()} (median $${d.reserve_guidance.first_cut.median.toLocaleString()})</div>` : ''}`);
+        <div class="space-y-2 mb-3">${(d.sops||[]).slice(0,4).map(s => `<div class="bg-white border rounded p-2 text-xs"><b>SOP #${s.n} — ${s.title}</b><div class="text-gray-600 mt-1">${s.rationale||''}</div></div>`).join('')}</div>
+        ${d.reserve_guidance ? `<div class="mb-3 bg-amber-50 p-2 rounded text-xs"><b>Reserve first-cut:</b> $${d.reserve_guidance.first_cut.low.toLocaleString()}–$${d.reserve_guidance.first_cut.high.toLocaleString()} (median $${d.reserve_guidance.first_cut.median.toLocaleString()})</div>` : ''}
+        ${d.resolved_tickets?.length ? `<div class="text-xs uppercase text-gray-500 font-semibold mb-2">Resolved tickets (${d.resolved_tickets.length})</div><table class="text-xs w-full mb-3"><thead><tr class="text-left text-gray-500 border-b"><th>Ticket</th><th>Pattern</th><th>Lesson</th></tr></thead><tbody>${d.resolved_tickets.slice(0,4).map(t => `<tr class="border-b"><td class="py-1 font-mono">${t.id}</td><td>${t.pattern}</td><td class="text-gray-600">${t.lesson}</td></tr>`).join('')}</tbody></table>` : ''}
+        ${d.exception_library?.length ? `<div class="text-xs uppercase text-gray-500 font-semibold mb-2">Exception library</div><div class="space-y-2">${d.exception_library.slice(0,3).map(e => `<div class="bg-white border-l-4 border-amber-400 p-2 text-xs"><b>${e.id}:</b> ${e.trigger}<div class="text-gray-600 mt-1">→ ${e.response}</div></div>`).join('')}</div>` : ''}`; });
+    }
     case 'scenario':
       return `<div class="space-y-2 text-sm">
           <div class="bg-gray-50 p-3 rounded"><b>Easy:</b> HO-3, no 4A, no prior, chimney flue → Playbook does not apply.</div>
           <div class="bg-gray-50 p-3 rounded"><b>Medium:</b> HO-3, 4A, no prior, panel → Reserve median $46-58k. No ROR.</div>
           <div class="bg-gray-50 p-3 rounded"><b>Hard:</b> Unrelated prior + panel → marshal flips to wiring Day 8. No ROR, expect 30-40% reserve up.</div>
         </div>`;
-    case 'reviewer':
-      return `<p class="text-sm mb-3">Reviewer nudges you. Approve, edit (re-prompts Claude), or reject each Playbook item.</p>
-        <div class="space-y-2 text-sm">
-          <div class="bg-white border rounded p-3"><b>SOP #2 — Reserve setting discipline</b><div class="flex gap-2 mt-2 text-xs no-toggle"><button class="px-3 py-1 bg-green-600 text-white rounded no-toggle" onclick="event.stopPropagation()">Approve</button><button class="px-3 py-1 border rounded no-toggle" onclick="event.stopPropagation()">Edit</button><button class="px-3 py-1 border border-red-300 text-red-700 rounded no-toggle" onclick="event.stopPropagation()">Reject</button></div></div>
-          <div class="bg-white border rounded p-3"><b>Exception ex1 — Wiring reclassification</b><div class="flex gap-2 mt-2 text-xs no-toggle"><button class="px-3 py-1 bg-green-600 text-white rounded no-toggle" onclick="event.stopPropagation()">Approve</button><button class="px-3 py-1 border rounded no-toggle" onclick="event.stopPropagation()">Edit</button><button class="px-3 py-1 border border-red-300 text-red-700 rounded no-toggle" onclick="event.stopPropagation()">Reject</button></div></div>
-        </div>`;
+    case 'reviewer': {
+      const trail = JSON.parse(sessionStorage.getItem('ltm_approval_trail') || '[]');
+      const reviewed = new Set(trail.map(t => t.target));
+      const pending = [];
+      (pipeline.playbook?.sops || []).forEach(s => { const k = `sop:${s.n}`; if (!reviewed.has(k)) pending.push({ kind:'SOP', target:k, label:`SOP #${s.n} — ${s.title}` }); });
+      (pipeline.playbook?.exception_library || []).forEach(e => { const k = `exc:${e.id}`; if (!reviewed.has(k)) pending.push({ kind:'Exception', target:k, label:`${e.id} — ${e.trigger}` }); });
+      if (pending.length === 0) {
+        return `<p class="text-sm mb-3">All Playbook items reviewed. Approval trail (${trail.length} actions) persisted.</p>
+          <div class="bg-green-50 border-l-4 border-green-600 p-3 rounded-r text-sm">Playbook status: <b>APPROVED</b>. Downstream agents will use the reviewed Playbook.</div>`;
+      }
+      return `<p class="text-sm mb-3">Reviewer Copilot is nudging you. <b>${pending.length}</b> Playbook items await your judgment.</p>
+        <div class="space-y-2 max-h-96 overflow-y-auto pr-1">${pending.slice(0,5).map(it => `
+          <div class="bg-white border rounded p-3 text-sm no-toggle" onclick="event.stopPropagation()">
+            <div class="text-xs text-gray-500 uppercase font-semibold mb-1">${it.kind}</div>
+            <div class="mb-2">${it.label}</div>
+            <div class="flex gap-2 text-xs">
+              <button class="rev-btn px-3 py-1 bg-green-600 text-white rounded no-toggle" data-action="approve" data-target="${it.target}" onclick="event.stopPropagation()">Approve</button>
+              <button class="rev-btn px-3 py-1 border rounded no-toggle" data-action="edit" data-target="${it.target}" onclick="event.stopPropagation()">Edit (re-prompt)</button>
+              <button class="rev-btn px-3 py-1 border border-red-300 text-red-700 rounded no-toggle" data-action="reject" data-target="${it.target}" onclick="event.stopPropagation()">Reject</button>
+            </div>
+          </div>`).join('')}</div>`;
+    }
     case 'analysis':
       return `<p class="text-sm mb-3">Weekly grading report.</p>
         <table class="text-xs w-full mb-3"><tr class="text-left text-gray-500 border-b"><th class="py-1">Rule</th><th>Confidence</th><th>Coverage</th></tr>
         <tr class="border-b"><td class="py-1">ROR when 4A+prior+panel</td><td>0.94</td><td>27/30 tickets</td></tr>
         <tr class="border-b"><td class="py-1">Hold ALE 10 days</td><td>0.90</td><td>high</td></tr>
         <tr><td class="py-1">Preserve panel evidence</td><td>0.95</td><td>complete</td></tr></table>
-        <div class="text-xs text-gray-500"><b>Scheduled follow-ups:</b> Wed session — weekend-FNOL ALE (30 min); Fri session — unusual prior loss files</div>`;
+        <div class="text-xs text-gray-500"><b>Follow-ups:</b> Wed — weekend-FNOL ALE (30 min); Fri — unusual prior loss files</div>`;
     case 'planner':
       return `<div class="grid grid-cols-3 gap-3 text-xs">
-          <div class="bg-gray-50 p-3 rounded"><b>30 days</b><ul class="mt-2 list-disc ml-4"><li>Shadow 5 panel-cause fires</li><li>Reserve Setting course</li><li>Pattern-Recognition quiz</li></ul></div>
+          <div class="bg-gray-50 p-3 rounded"><b>30 days</b><ul class="mt-2 list-disc ml-4"><li>Shadow 5 panel-cause fires</li><li>Reserve Setting course</li></ul></div>
           <div class="bg-gray-50 p-3 rounded"><b>60 days</b><ul class="mt-2 list-disc ml-4"><li>Lead 3 straightforward files</li><li>ROR Communication practicum</li></ul></div>
           <div class="bg-gray-50 p-3 rounded"><b>90 days</b><ul class="mt-2 list-disc ml-4"><li>5 panel-cause files solo</li><li>Certification exam</li></ul></div>
         </div>`;
-    case 'coach':
-      return await liveCall('/api/coach', d => `<p class="text-sm mb-2">Coaching plan for <b>${d.trainee||'Sarah Lin'}</b>.</p>
+    case 'coach': {
+      const uploadedDocs = getUploads('coach') || [];
+      const body = { playbook: pipeline.playbook, uploadedDocs };
+      const scene = await liveCallWithBody('/api/coach', body, d => `<p class="text-sm mb-2">Coaching plan for <b>${d.trainee||'Sarah Lin'}</b>${uploadedDocs.length ? ' — grounded in ' + uploadedDocs.length + ' uploaded docs' : ''}.</p>
         <div class="grid grid-cols-2 gap-3 text-xs">
-          <div><b>Practice questions (${(d.questions||[]).length})</b>${(d.questions||[]).slice(0,2).map(q => `<div class="bg-gray-50 p-2 mt-2 rounded"><b>${q.difficulty}:</b> ${q.prompt}</div>`).join('')}</div>
-          <div><b>Micro-lessons (${(d.micro_lessons||[]).length})</b>${(d.micro_lessons||[]).slice(0,2).map(m => `<div class="bg-gray-50 p-2 mt-2 rounded"><b>${m.title}</b> (${m.duration_min} min)<div class="text-gray-600 mt-1">${m.summary}</div></div>`).join('')}</div>
+          <div><b>Practice questions (${(d.questions||[]).length})</b>${(d.questions||[]).slice(0,3).map(q => `<div class="bg-gray-50 p-2 mt-2 rounded"><b>${q.difficulty}:</b> ${q.prompt}<div class="text-gray-500 mt-1">sources: ${(q.sources||[]).join(', ')}</div></div>`).join('')}</div>
+          <div><b>Micro-lessons (${(d.micro_lessons||[]).length})</b>${(d.micro_lessons||[]).slice(0,3).map(m => `<div class="bg-gray-50 p-2 mt-2 rounded"><b>${m.title}</b> (${m.duration_min} min)<div class="text-gray-600 mt-1">${m.summary}</div></div>`).join('')}</div>
         </div>`);
+      return scene + `
+        <details class="mt-3 bg-blue-50 border-l-4 border-blue-500 rounded-r p-3 text-xs no-toggle" onclick="event.stopPropagation()">
+          <summary class="cursor-pointer font-semibold text-blue-900">📁 Upload documents for the Coach to react to</summary>
+          <div class="mt-2 text-blue-900">Upload any <code>.txt</code> or <code>.md</code>. Coach regenerates questions + lessons grounded in your uploads.</div>
+          <input type="file" id="coach-upload" accept=".txt,.md,.json" multiple class="text-xs mt-2 no-toggle" onclick="event.stopPropagation()"/>
+          <div class="text-blue-800 mt-1">Currently uploaded: ${uploadedDocs.length} docs</div>
+        </details>`;
+    }
     case 'copilot':
       return `<div class="bg-gray-50 p-3 rounded text-sm mb-3"><b>FNOL:</b> HO-3, 4A present, prior loss, insured reports popping and flickering before smoke.</div>
         <div class="bg-red-50 border-l-4 border-brand-red p-4 rounded-r-md">
@@ -298,23 +403,38 @@ async function renderSceneBody(a) {
           <div class="font-medium">Playbook: Fire · Panel-cause · 4A · Prior Loss (v2.0)</div>
           <ol class="text-sm list-decimal ml-5 space-y-1 mt-2"><li>Set reserve $60-75k median</li><li>Hold ALE 10 days</li><li>Issue ROR — call insured first</li></ol>
           <div class="text-xs mt-3"><b>~6 min to first coverage action (vs 60-120 min unassisted)</b></div>
-        </div>
-        <div class="mt-3 text-center text-sm text-gray-600">Sarah closes the file in ~6 minutes. Mike's judgment lives on.</div>`;
+        </div>`;
     default: return '<div class="text-sm text-gray-500">No content.</div>';
   }
 }
 
-async function liveCall(endpoint, render) {
+// Reviewer button delegation
+document.addEventListener('click', e => {
+  const b = e.target.closest('.rev-btn');
+  if (!b) return;
+  e.stopPropagation();
+  const action = b.dataset.action;
+  const target = b.dataset.target;
+  const trail = JSON.parse(sessionStorage.getItem('ltm_approval_trail') || '[]');
+  let note = '';
+  if (action === 'edit') { note = prompt('What should change?') || ''; if (!note) return; }
+  if (action === 'reject') { note = prompt('Reason for rejection?') || ''; }
+  trail.push({ ts: new Date().toISOString(), reviewer:'Mike Karolczak', action, target, note });
+  sessionStorage.setItem('ltm_approval_trail', JSON.stringify(trail));
+  if (state.active === 'reviewer') activate('reviewer');
+});
+
+async function liveCallWithBody(endpoint, body, render) {
   try {
-    const r = await fetch(endpoint, { method:'POST', headers:{'Content-Type':'application/json'}, body:'{}' });
-    if (!r.ok) throw new Error('http_' + r.status);
+    const r = await fetch(endpoint, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body||{}) });
+    if (!r.ok) throw new Error('http_'+r.status);
     const j = await r.json();
     const badge = j.source === 'live' ? '<span class="pill pill-real">LIVE</span>' : (j.source === 'synthetic' ? '<span class="pill pill-mock">SYNTHETIC</span>' : '<span class="pill pill-mock">CACHED</span>');
     return `<div class="mb-3 text-right">${badge}</div>` + render(j.data);
   } catch (err) {
     return `<div class="bg-amber-50 border-l-4 border-amber-500 p-3 text-sm rounded-r">
-      <b>Endpoint unreachable.</b> The demo can still walk through — this agent shows what the payload would look like once deployed to Vercel with serverless functions built.
-      <details class="mt-2 text-xs"><summary class="cursor-pointer">Debug info</summary><div class="mt-2">Called: <code>${endpoint}</code><br/>Error: ${err.message}</div></details>
+      <b>Endpoint unreachable.</b> Deploy to Vercel with the /api/ folder and env vars set.
+      <details class="mt-2 text-xs no-toggle" onclick="event.stopPropagation()"><summary class="cursor-pointer">Debug</summary><div class="mt-2">Called: <code>${endpoint}</code><br/>Error: ${err.message}</div></details>
     </div>`;
   }
 }
