@@ -1,0 +1,12 @@
+{
+  "step_n": 3,
+  "revised_title": "Set reserve to pattern median with tighter Day 10 review discipline",
+  "revised_rationale": "Set to the median outcome for the panel-cause + 4A + prior pattern ($60–75k first cut). Book a mandatory Day 10 review — not an optional one — because origin typically returns between Day 7 and Day 12 and reserve accuracy compounds fast after that point. A softer Day 30 review absorbs any subrogation-adjacent revisions.",
+  "sme_edit_reason": "Original step said 'mark review Day 10 and Day 30' — reviewer emphasized Day 10 must be mandatory not marked, because that's when origin typically lands.",
+  "revised_step": {
+    "n": 3,
+    "title": "Set reserve to pattern median with mandatory Day 10 review",
+    "rationale": "Median-outcome reserving ($60–75k first cut) aligns to actual outcomes across the corpus. Day 10 review is mandatory — origin reports historically land between Day 7 and Day 12 and reserve drift after that point is expensive. Day 30 review remains scheduled for subrogation-adjacent revisions.",
+    "sources": ["int_2025_04_22", "CL-105619", "CL-106861", "SME edit 2025-04-24"]
+  }
+}

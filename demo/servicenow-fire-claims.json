@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "source": "ServiceNow (uploaded)",
+    "instance": "travelers.service-now.com",
+    "table": "incident",
+    "query": "assigned_to.user_name=mkarolczak^state=6",
+    "pulled_at": "2026-07-01T20:00:00Z",
+    "total": 5
+  },
+  "result": [
+    {
+      "sys_id": "up01a2b3c4d5e6f7890abcdef1234567",
+      "number": "INC0020101",
+      "short_description": "Reserve escalation approval — panel-cause fire (CL-108300)",
+      "description": "Reserve on CL-108300 raised to $92,800 based on origin report identifying FPE Stab-Lok panel model. Requires manager sign-off per policy Section 4.2. Manufacturer recall confirmed. Subrogation opened SUB-0155-2026.",
+      "state": "6",
+      "state_label": "Resolved",
+      "priority": "3 - Moderate",
+      "category": "Claim Operations",
+      "subcategory": "Reserve Approval",
+      "opened_at": "2026-05-14 10:22:11",
+      "closed_at": "2026-05-15 16:00:04",
+      "opened_by": {"name": "Property Claims Rules Engine", "user_name": "prop.rules"},
+      "assigned_to": {"name": "Mike Karolczak", "user_name": "mkarolczak"},
+      "close_notes": "Approved by J. Whitfield. Panel manufacturer recall confirmed. Subrogation is expected to offset materially."
+    },
+    {
+      "sys_id": "up02b3c4d5e6f7890abcdef12345678a",
+      "number": "INC0020118",
+      "short_description": "Wiring reclassification — reserve upward revision (CL-108321)",
+      "description": "Fire marshal report re-classified cause from panel to branch wiring. Reserve moved from $67,000 to $91,500 (36.6% increase). Aligns with playbook exception ex1 — wiring cases historically escalate.",
+      "state": "6",
+      "state_label": "Resolved",
+      "priority": "2 - High",
+      "category": "Claim Operations",
+      "subcategory": "Reserve Revision",
+      "opened_at": "2026-06-02 14:11:00",
+      "closed_at": "2026-06-02 18:22:00",
+      "assigned_to": {"name": "Mike Karolczak", "user_name": "mkarolczak"},
+      "close_notes": "Confirmed exception pattern from playbook. Evidence chain preserved for wiring. Day 30 review scheduled."
+    },
+    {
+      "sys_id": "up03c4d5e6f7890abcdef123456789bc",
+      "number": "INC0020144",
+      "short_description": "SIU courtesy notice — 4A + prior + panel (CL-108359)",
+      "description": "Courtesy notice to SIU on file exposure. No investigation opened. Standard 4A/prior/panel triple.",
+      "state": "6",
+      "state_label": "Resolved",
+      "priority": "4 - Low",
+      "category": "Claim Operations",
+      "opened_at": "2026-06-18 09:00:00",
+      "closed_at": "2026-06-18 09:40:00",
+      "assigned_to": {"name": "Mike Karolczak", "user_name": "mkarolczak"},
+      "close_notes": "SIU acknowledged. No investigation."
+    },
+    {
+      "sys_id": "up04d5e6f7890abcdef123456789abcd",
+      "number": "INC0020171",
+      "short_description": "Cold-weather ALE extension approval (CL-108377)",
+      "description": "January fire with displaced-family ALE at week 4. Reserve pattern for cold-weather panel-cause claims documented in Confluence (page 298471234 update). Requesting extension approval past Day 15 review.",
+      "state": "6",
+      "state_label": "Resolved",
+      "priority": "3 - Moderate",
+      "category": "ALE Management",
+      "opened_at": "2026-06-22 11:00:00",
+      "closed_at": "2026-06-24 14:00:00",
+      "assigned_to": {"name": "Mike Karolczak", "user_name": "mkarolczak"},
+      "close_notes": "Extension approved through Day 30. Cold-weather premium reserve pattern confirmed."
+    },
+    {
+      "sys_id": "up05e6f7890abcdef123456789abcdef0",
+      "number": "INC0020195",
+      "short_description": "Origin report clearance — ROR release (CL-108402)",
+      "description": "Origin report cleared to standard panel-cause with no manufacturer defect. Same-day ROR release per playbook SOP #3. Insured contacted by phone before written release.",
+      "state": "6",
+      "state_label": "Resolved",
+      "priority": "4 - Low",
+      "category": "Claim Operations",
+      "opened_at": "2026-06-27 08:30:00",
+      "closed_at": "2026-06-27 10:00:00",
+      "assigned_to": {"name": "Mike Karolczak", "user_name": "mkarolczak"},
+      "close_notes": "ROR released. Insured relationship preserved. Standard file close."
+    }
+  ]
+}

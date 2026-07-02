@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "source": "Jira Cloud",
+    "instance": "travelers.atlassian.net",
+    "project": "CLAIM",
+    "jql": "project = CLAIM AND assignee = mkarolczak AND status = Done AND resolved >= -730d",
+    "pulled_at": "2026-06-30T22:14:03Z",
+    "total": 12
+  },
+  "issues": [
+    {
+      "id": "10842",
+      "key": "CLAIM-104812",
+      "self": "https://travelers.atlassian.net/rest/api/3/issue/10842",
+      "fields": {
+        "summary": "HO-3 fire · panel-cause · 4A · prior loss (Hartford CT)",
+        "issuetype": {"name": "Claim", "iconUrl": "https://.../claim.png"},
+        "status": {"name": "Done", "statusCategory": {"name": "Complete"}},
+        "resolution": {"name": "Paid with ROR"},
+        "priority": {"name": "High"},
+        "reporter": {"displayName": "FNOL Intake Bot", "emailAddress": "fnol@travelers.com"},
+        "assignee": {"displayName": "Mike Karolczak", "emailAddress": "mkarolczak@travelers.com", "accountId": "5b10a2844c20165700ede21g"},
+        "created": "2024-01-11T08:14:22.000-0500",
+        "updated": "2024-01-18T16:42:11.000-0500",
+        "resolutiondate": "2024-01-18T16:42:11.000-0500",
+        "labels": ["fire", "HO-3", "endorsement-4A", "panel-cause", "prior-loss", "subro-candidate"],
+        "components": [{"name": "Property Claims"}],
+        "customfield_10032": 47500,
+        "customfield_10033": 62300,
+        "customfield_10041": "Yes",
+        "description": {
+          "type": "doc",
+          "content": [
+            {"type": "paragraph", "content": [{"type": "text", "text": "FNOL received via phone. Insured reports popping sound and lights flickering ~90 sec before smoke observed. Fire concentrated at electrical service entrance panel. Prior claim CL-105619 (2022, dwelling water) on same policy."}]}
+          ]
+        },
+        "comment": {
+          "total": 4,
+          "comments": [
+            {"author": {"displayName": "Mike Karolczak"}, "created": "2024-01-12T10:22:00-0500", "body": "Panel-cause signature. Ordered origin, called SIU as courtesy. Reserve set modest per pattern."},
+            {"author": {"displayName": "Fire Marshal (external)"}, "created": "2024-01-16T14:08:00-0500", "body": "Origin: distribution panel, model FPE-Stab-Lok. Consistent with active recall."},
+            {"author": {"displayName": "Mike Karolczak"}, "created": "2024-01-16T15:41:00-0500", "body": "Recall match confirmed. Opening subrogation. Preserving panel per chain of custody."},
+            {"author": {"displayName": "Mike Karolczak"}, "created": "2024-01-18T16:35:00-0500", "body": "ROR released. Payment issued $62,300. Subro file opened separately."}
+          ]
+        }
+      }
+    },
+    {
+      "id": "10897",
+      "key": "CLAIM-104867",
+      "fields": {
+        "summary": "HO-3 fire · panel-cause · 4A · prior loss (Springfield MA)",
+        "issuetype": {"name": "Claim"},
+        "status": {"name": "Done"},
+        "resolution": {"name": "Paid"},
+        "priority": {"name": "High"},
+        "assignee": {"displayName": "Mike Karolczak"},
+        "created": "2024-01-22T09:11:00-0500",
+        "resolutiondate": "2024-02-06T15:28:00-0500",
+        "labels": ["fire", "HO-3", "endorsement-4A", "panel-cause", "prior-loss", "recurring-insured"],
+        "customfield_10032": 55000,
+        "customfield_10033": 71400,
+        "comment": {"total": 6, "comments": [{"author": {"displayName": "Mike Karolczak"}, "created": "2024-01-23T11:00:00-0500", "body": "Second claim same insured within 18 months. SIU courtesy check on day 3, cleared. Panel-cause confirmed by marshal."}]}
+      }
+    },
+    {"id": "11041", "key": "CLAIM-105144", "fields": {"summary": "HO-3 fire · 4A · prior loss · panel · Total Loss ALE", "status": {"name": "Done"}, "resolution": {"name": "Paid with ROR"}, "assignee": {"displayName": "Mike Karolczak"}, "created": "2024-03-02T07:44:00-0500", "resolutiondate": "2024-03-15T14:12:00-0500", "labels": ["fire", "HO-3", "endorsement-4A", "panel-cause", "prior-loss", "total-loss"], "customfield_10032": 61000, "customfield_10033": 88250}},
+    {"id": "11412", "key": "CLAIM-105412", "fields": {"summary": "HO-3 fire · initially panel · reclassified branch wiring", "status": {"name": "Done"}, "resolution": {"name": "Paid with ROR"}, "assignee": {"displayName": "Mike Karolczak"}, "created": "2024-04-30T10:03:00-0400", "resolutiondate": "2024-05-19T16:44:00-0400", "labels": ["fire", "HO-3", "endorsement-4A", "cause-reclassified", "branch-wiring"], "customfield_10032": 58000, "customfield_10033": 79600}},
+    {"id": "11619", "key": "CLAIM-105619", "fields": {"summary": "HO-3 fire · panel · 4A · prior loss · Total loss dwelling", "status": {"name": "Done"}, "resolution": {"name": "Paid with ROR"}, "assignee": {"displayName": "Mike Karolczak"}, "created": "2024-05-14T08:33:00-0400", "resolutiondate": "2024-06-11T17:00:00-0400", "labels": ["fire", "HO-3", "endorsement-4A", "panel-cause", "prior-loss", "total-loss", "subrogation-open"], "customfield_10032": 68000, "customfield_10033": 104900}},
+    {"id": "12244", "key": "CLAIM-106244", "fields": {"summary": "HO-3 fire · panel · 4A · prior loss · recall subro filed", "status": {"name": "Done"}, "resolution": {"name": "Paid with ROR"}, "assignee": {"displayName": "Mike Karolczak"}, "created": "2024-07-15T09:18:00-0400", "resolutiondate": "2024-08-05T16:14:00-0400", "labels": ["fire", "HO-3", "endorsement-4A", "panel-cause", "prior-loss", "subrogation-open"], "customfield_10032": 72000, "customfield_10033": 96500}},
+    {"id": "12489", "key": "CLAIM-106489", "fields": {"summary": "HO-3 fire · panel · 4A · prior loss", "status": {"name": "Done"}, "resolution": {"name": "Paid with ROR"}, "assignee": {"displayName": "Mike Karolczak"}, "created": "2024-08-12T08:22:00-0400", "resolutiondate": "2024-09-04T14:50:00-0400", "labels": ["fire", "HO-3", "endorsement-4A", "panel-cause", "prior-loss"], "customfield_10032": 54000, "customfield_10033": 74700}},
+    {"id": "12861", "key": "CLAIM-106861", "fields": {"summary": "HO-3 fire · panel · 4A · prior loss · big-file subro", "status": {"name": "Done"}, "resolution": {"name": "Paid with ROR"}, "assignee": {"displayName": "Mike Karolczak"}, "created": "2024-09-23T09:44:00-0400", "resolutiondate": "2024-10-14T16:33:00-0400", "labels": ["fire", "HO-3", "endorsement-4A", "panel-cause", "prior-loss", "subrogation-open"], "customfield_10032": 62000, "customfield_10033": 88900}},
+    {"id": "13091", "key": "CLAIM-107091", "fields": {"summary": "HO-3 fire · panel · 4A · prior loss (small kitchen prior)", "status": {"name": "Done"}, "resolution": {"name": "Paid with ROR"}, "assignee": {"displayName": "Mike Karolczak"}, "created": "2024-10-21T11:12:00-0400", "resolutiondate": "2024-11-13T15:00:00-0500", "labels": ["fire", "HO-3", "endorsement-4A", "panel-cause", "prior-loss"], "customfield_10032": 59000, "customfield_10033": 81200}},
+    {"id": "13331", "key": "CLAIM-107331", "fields": {"summary": "HO-3 fire · panel · 4A · prior loss · Total loss", "status": {"name": "Done"}, "resolution": {"name": "Paid with ROR"}, "assignee": {"displayName": "Mike Karolczak"}, "created": "2024-11-18T09:03:00-0500", "resolutiondate": "2024-12-09T17:11:00-0500", "labels": ["fire", "HO-3", "endorsement-4A", "panel-cause", "prior-loss", "total-loss", "subrogation-open"], "customfield_10032": 71000, "customfield_10033": 99400}},
+    {"id": "13841", "key": "CLAIM-107841", "fields": {"summary": "HO-3 fire · panel · 4A · prior loss · same mfr", "status": {"name": "Done"}, "resolution": {"name": "Paid with ROR"}, "assignee": {"displayName": "Mike Karolczak"}, "created": "2025-01-20T08:41:00-0500", "resolutiondate": "2025-02-11T16:00:00-0500", "labels": ["fire", "HO-3", "endorsement-4A", "panel-cause", "prior-loss", "subrogation-open", "FPE-mfr"], "customfield_10032": 63000, "customfield_10033": 87400}},
+    {"id": "14214", "key": "CLAIM-108214", "fields": {"summary": "HO-3 fire · panel · 4A · prior loss · canonical file", "status": {"name": "Done"}, "resolution": {"name": "Paid with ROR"}, "assignee": {"displayName": "Mike Karolczak"}, "created": "2025-03-04T08:22:00-0500", "resolutiondate": "2025-03-27T17:45:00-0400", "labels": ["fire", "HO-3", "endorsement-4A", "panel-cause", "prior-loss", "canonical-training-file"], "customfield_10032": 69000, "customfield_10033": 95300}}
+  ]
+}

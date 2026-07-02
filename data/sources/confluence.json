@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "source": "Confluence Cloud",
+    "instance": "travelers.atlassian.net/wiki",
+    "space": "PROPCL",
+    "cql": "space = PROPCL AND contributor = mkarolczak AND lastModified >= now(-730d)",
+    "pulled_at": "2026-06-30T22:14:03Z",
+    "total": 4
+  },
+  "results": [
+    {
+      "id": "298471234",
+      "type": "page",
+      "status": "current",
+      "title": "Panel-cause fires — signature language tells (adjuster field notes)",
+      "space": {"key": "PROPCL", "name": "Property Claims — Knowledge"},
+      "version": {"number": 4, "by": {"displayName": "Mike Karolczak"}, "when": "2024-11-12T14:22:00-0500"},
+      "labels": ["fire", "panel-cause", "adjuster-notes", "training"],
+      "body": {
+        "storage": {
+          "value": "<h2>Signature tells</h2><p>Three FNOL phrases reliably signal panel-cause across the last two years of files:</p><ul><li>'popping sound before the smoke'</li><li>'lights flickered before we saw fire'</li><li>fire location described as electrical service entrance or main breaker panel area</li></ul><h2>Confirmation path</h2><ol><li>Order origin report immediately</li><li>Cross-reference model against active recall list on receipt</li><li>Preserve panel physically — chain of custody required for subro</li></ol><h2>Do not skip preservation</h2><p>Even on small files. Even without 4A. The recall subrogation path is available regardless of endorsement.</p>",
+          "representation": "storage"
+        }
+      }
+    },
+    {
+      "id": "298471456",
+      "type": "page",
+      "title": "ROR-before-letter phone call — script and objections",
+      "space": {"key": "PROPCL", "name": "Property Claims — Knowledge"},
+      "version": {"number": 2, "by": {"displayName": "Mike Karolczak"}, "when": "2024-08-22T11:44:00-0400"},
+      "labels": ["ror", "customer-communication", "correspondence"],
+      "body": {"storage": {"value": "<p>Script: 'This is a big claim, our engineer has to look at the panel, and while he does we're keeping our options open, but I have zero reason to think anything is wrong.'</p><p>Common objections and responses documented below.</p>", "representation": "storage"}}
+    },
+    {
+      "id": "298471789",
+      "type": "page",
+      "title": "Endorsement 4A — reference and dwelling extension mechanics",
+      "space": {"key": "PROPCL", "name": "Property Claims — Knowledge"},
+      "version": {"number": 8, "by": {"displayName": "Karen Sullivan"}, "when": "2025-01-08T09:33:00-0500"},
+      "labels": ["endorsement", "4A", "policy-reference"],
+      "body": {"storage": {"value": "<p>Endorsement 4A extends dwelling coverage to include additional structures under specific circumstances. See §4.2 for triggering conditions.</p>", "representation": "storage"}}
+    },
+    {
+      "id": "298472012",
+      "type": "page",
+      "title": "Reserve discipline — median-outcome reserving (Karolczak method)",
+      "space": {"key": "PROPCL", "name": "Property Claims — Knowledge"},
+      "version": {"number": 3, "by": {"displayName": "Mike Karolczak"}, "when": "2025-02-04T13:11:00-0500"},
+      "labels": ["reserves", "discipline", "training"],
+      "body": {"storage": {"value": "<p>Set reserve to the median outcome for the pattern you're seeing. Mark review Day 10 and Day 30. Do not over-reserve to feel safe — ALE decisions get slow.</p>", "representation": "storage"}}
+    }
+  ]
+}

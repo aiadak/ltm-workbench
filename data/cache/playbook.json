@@ -1,0 +1,94 @@
+{
+  "id": "pb_fire_panel_4a_v2_0_DRAFT",
+  "title": "Fire · Panel-cause · Endorsement 4A · Prior Loss History",
+  "version": "2.0",
+  "status": "DRAFT",
+  "author_sme": "Mike Karolczak",
+  "applicability": [
+    "loss_type == fire",
+    "policy_form == HO-3",
+    "endorsements includes 4A",
+    "prior_loss_history == true",
+    "cause_signature == panel"
+  ],
+  "sops": [
+    {
+      "n": 1,
+      "title": "Recognize pattern from FNOL",
+      "trigger": "New fire claim FNOL received on HO-3 policy",
+      "steps": [
+        "Read FNOL narrative for panel-cause language tells: 'popping sound before smoke', 'lights flickered', ignition at electrical service entrance.",
+        "Confirm Endorsement 4A on declarations page.",
+        "Check policy history for prior loss (any cause family).",
+        "If all three present, invoke SOP #2–#4."
+      ],
+      "rationale": "The 4A + prior + panel triple is the decision fork Mike uses on every large fire file. Missing any element → alternate handling.",
+      "sources": ["int_2025_04_15", "CL-108214", "CL-107841"]
+    },
+    {
+      "n": 2,
+      "title": "Reserve setting discipline",
+      "trigger": "SOP #1 pattern confirmed",
+      "steps": [
+        "Set reserve to pattern median first-cut: $60,000–75,000 (median $68,000).",
+        "Do NOT over-reserve to feel safe — ALE decisions get slow.",
+        "Schedule mandatory Day 10 review (origin typically lands Day 7–12).",
+        "Schedule soft Day 30 review for subrogation-adjacent revisions."
+      ],
+      "rationale": "Median-outcome reserving aligns to actual outcomes across 30-ticket corpus. Day 10 mandate reflects observed origin-report timing.",
+      "sources": ["int_2025_04_22", "CL-105619", "CL-106861", "CL-107841"]
+    },
+    {
+      "n": 3,
+      "title": "ROR communication",
+      "trigger": "SOP #1 pattern confirmed AND reserve set",
+      "steps": [
+        "Draft ROR letter using template ROR-4A-01.",
+        "Call insured BEFORE letter arrives — explain scope, timing, non-accusatory intent.",
+        "Send letter within 24h of call.",
+        "On origin clearance: same-day phone call to release ROR, then written notice."
+      ],
+      "rationale": "ROR is coverage protection, not accusation. Phone-first communication prevents 90% of coverage disputes and preserves customer relationship.",
+      "sources": ["int_2025_04_15"]
+    },
+    {
+      "n": 4,
+      "title": "Subrogation & evidence preservation",
+      "trigger": "Origin report identifies panel as cause",
+      "steps": [
+        "Cross-check panel model against active manufacturer recall list.",
+        "If in recall window: open subrogation file, notify manufacturer via certified mail.",
+        "Preserve physical panel with chain of custody documentation.",
+        "Even absent recall: preserve panel and photograph. Subro path may open later.",
+        "Even absent 4A: preserve panel. Recall subrogation is available regardless of endorsement."
+      ],
+      "rationale": "Panel manufacturers have been on notice for a decade. Physical evidence is cheap; recovery is meaningful to the book.",
+      "sources": ["int_2025_04_15", "int_2025_04_22", "CL-105619", "CL-106861", "CL-107841"]
+    }
+  ],
+  "reserve_guidance": {
+    "first_cut": {"low": 60000, "median": 68000, "high": 75000},
+    "review_points": ["Day 10 (mandatory)", "Day 30 (soft)"],
+    "notes": "Set to median for the pattern. Do not over-reserve. Let origin change the number, not imagination."
+  },
+  "resolved_tickets": [
+    {"id": "CL-105619", "pattern": "4A + prior + panel, total loss", "reserve_final": 104900, "outcome": "paid_with_reservation_of_rights", "lesson": "Total-loss dwelling on this pattern trends 40%+ above initial reserve — expect it."},
+    {"id": "CL-106861", "pattern": "4A + prior + panel, recall subro", "reserve_final": 88900, "outcome": "paid_with_reservation_of_rights", "lesson": "Same FPE manufacturer as CL-105619 and CL-107841 — pattern-level subro angle worth flagging to leadership."},
+    {"id": "CL-107841", "pattern": "4A + prior + panel, standard", "reserve_final": 87400, "outcome": "paid_with_reservation_of_rights", "lesson": "Textbook file. Reference this as canonical for junior training."},
+    {"id": "CL-105412", "pattern": "Initially panel, reclassified to branch wiring on Day 8", "reserve_final": 79600, "outcome": "paid_with_reservation_of_rights", "lesson": "Wiring reclassification is why Day 10 review must be mandatory, not optional."},
+    {"id": "CL-106011", "pattern": "Panel-cause with UNRELATED prior loss", "reserve_final": 68200, "outcome": "paid", "lesson": "Prior loss in a different cause family (water) does NOT trigger ROR. Judge the pattern, not the count."},
+    {"id": "CL-108214", "pattern": "Canonical training file · 4A + prior + panel + intermediate revision", "reserve_final": 95300, "outcome": "paid_with_reservation_of_rights", "lesson": "This is the file the playbook is anchored to. Every element of the pattern is present."}
+  ],
+  "ticket_scenario_mapping": [
+    {"scenario_id": "sc_easy", "scenario_label": "HO-3 fire, no 4A, no prior — chimney flue", "difficulty": "easy", "grounded_in": ["CL-105278", "CL-107966"], "expected_reasoning": "Playbook does NOT apply. Route to standard fire handling. No ROR, no special reserve pattern."},
+    {"scenario_id": "sc_med", "scenario_label": "HO-3 fire, 4A present, no prior, panel-cause", "difficulty": "medium", "grounded_in": ["CL-105341", "CL-105889", "CL-107212", "CL-108088"], "expected_reasoning": "Reserve first-cut median $46-58k. NO ROR (missing prior loss trigger). Still preserve panel — recall subro still available."},
+    {"scenario_id": "sc_hard", "scenario_label": "HO-3 fire, 4A present, unrelated prior loss, panel signature — origin flips to branch wiring Day 8", "difficulty": "hard", "grounded_in": ["CL-106011", "CL-105412"], "expected_reasoning": "Do NOT ROR (unrelated prior). Reserve first-cut median. On origin flip: expect 30–40% upward revision. Preserve wiring evidence (still evidence chain even if not recall-eligible)."}
+  ],
+  "exception_library": [
+    {"id": "ex1", "trigger": "Cause reads as panel but marshal breaks it out as branch wiring", "response": "Wait for fire marshal breakdown before locking reserve; expect 30–40% reserve upward revision. Wiring cases historically escalate. Do not lose evidence chain.", "sources": ["CL-105412", "int_2025_04_22"]},
+    {"id": "ex2", "trigger": "Prior loss present but from unrelated cause family", "response": "Do NOT automatically ROR. Treat as standard panel-cause absent other signals. Judge the pattern, not just the count.", "sources": ["CL-106011", "int_2025_04_22"]},
+    {"id": "ex3", "trigger": "Panel-cause fire but no Endorsement 4A on policy", "response": "Preserve panel anyway. Recall subrogation is available regardless of endorsement. 4A only affects dwelling extension exposure, not the mechanical subro path.", "sources": ["int_2025_04_22"]},
+    {"id": "ex4", "trigger": "Insured attorney demands multi-week ALE commitment before origin", "response": "Decline upfront commitment. Extend rolling two-week hold. Explain to counsel that early commitment is unrecoverable if origin returns adverse. Offer Day 10 review.", "sources": ["int_2025_04_22"]}
+  ],
+  "approval_trail": []
+}

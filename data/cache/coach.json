@@ -1,0 +1,91 @@
+{
+  "trainee": "Sarah Lin",
+  "based_on": ["pb_fire_panel_4a_v2_0", "int_2025_04_15", "int_2025_04_22", "30 fire-claim tickets"],
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "You receive a fire FNOL on an HO-3 policy with Endorsement 4A. The insured reports 'popping sounds and flickering lights before smoke,' and policy history shows a prior kitchen-water claim from 2022. What is your first coverage action, and why?",
+      "answer_key": "Issue Reservation of Rights and call the insured to explain before the letter arrives. Rationale: 4A + panel-cause signature is present, but prior loss is unrelated cause family — still enough exposure through 4A dwelling extension to warrant ROR. Call before letter is a customer-preservation practice.",
+      "difficulty": "medium",
+      "sources": ["int_2025_04_15", "playbook v2.0 Step 5"]
+    },
+    {
+      "id": "q2",
+      "prompt": "The origin report comes back identifying the panel as a specific model on an active manufacturer recall list. Reserve is at $68,000. Walk through your next three actions in order.",
+      "answer_key": "1) Open subrogation against the panel manufacturer. 2) Preserve the physical panel as evidence — physical chain of custody. 3) Release the ROR to the insured (same day, phone first) since origin cleared to a mechanical cause not a coverage issue.",
+      "difficulty": "medium",
+      "sources": ["int_2025_04_22", "playbook v2.0 Steps 7-9"]
+    },
+    {
+      "id": "q3",
+      "prompt": "On day 4 of a similar file, the insured's attorney demands a six-week hotel commitment through ALE. Origin is still pending. How do you respond?",
+      "answer_key": "Decline the commitment while extending the current two-week hold. Explain to counsel that ALE is being managed on a rolling basis pending origin — not to punish the insured but because a six-week upfront commitment is unrecoverable if origin returns adverse. Offer to review at Day 10.",
+      "difficulty": "hard",
+      "sources": ["int_2025_04_22"]
+    },
+    {
+      "id": "q4",
+      "prompt": "A junior colleague asks: why bother preserving the panel on a small $12,000 fire when there's no 4A endorsement?",
+      "answer_key": "Because manufacturer recall subrogation is available regardless of endorsement. 4A affects dwelling extension exposure only, not the mechanical-cause subro path. Preserving the panel is cheap; burning the subro because you didn't is not.",
+      "difficulty": "easy",
+      "sources": ["int_2025_04_22"]
+    },
+    {
+      "id": "q5",
+      "prompt": "You reserve a panel-cause fire at $65,000 on Day 1. On Day 8 the fire marshal breaks the cause out as branch wiring, not the panel. What should you expect to happen to the reserve, and what does the playbook say to do?",
+      "answer_key": "Expect 30-40% upward revision to $85-90k. Wiring cases historically escalate. Adjust the reserve immediately upon confirmed origin; do not wait for Day 10 review.",
+      "difficulty": "medium",
+      "sources": ["CL-105412", "playbook v2.0 exception handling"]
+    }
+  ],
+  "micro_lessons": [
+    {
+      "id": "ml1",
+      "title": "Reading a FNOL for panel-cause",
+      "duration_min": 8,
+      "summary": "Three language tells reliably signal panel-cause across Mike's 30+ handled claims. This lesson walks you through recognizing each one from raw FNOL text, with masked examples from actual files.",
+      "sources": ["int_2025_04_15", "CL-105619", "CL-106861", "CL-107841"]
+    },
+    {
+      "id": "ml2",
+      "title": "The ROR-before-letter phone call",
+      "duration_min": 6,
+      "summary": "Mike's rule: never let a Reservation of Rights letter arrive cold. This lesson gives you the actual language he uses, the objections you'll hear, and how to close the call.",
+      "sources": ["int_2025_04_15"]
+    },
+    {
+      "id": "ml3",
+      "title": "Median-outcome reserving discipline",
+      "duration_min": 10,
+      "summary": "Why over-reserving hurts the book, the insured, and your own credibility. Median-outcome reserving with Day 10 / Day 30 review points — how Mike stays within 8% of final on 27 of the last 30 files.",
+      "sources": ["int_2025_04_22", "reserve data across 30 tickets"]
+    },
+    {
+      "id": "ml4",
+      "title": "Preserve the panel — evidence chain 101",
+      "duration_min": 7,
+      "summary": "The single highest-leverage action on any panel-cause fire, regardless of file size. Chain of custody in five steps, what to photograph, and how to document.",
+      "sources": ["int_2025_04_22"]
+    },
+    {
+      "id": "ml5",
+      "title": "Cross-checking recall lists",
+      "duration_min": 5,
+      "summary": "The active recall databases, how to search by model, and what to file when you get a match.",
+      "sources": ["int_2025_04_15", "CL-105619"]
+    }
+  ],
+  "schedule": [
+    {"date": "2026-07-06", "time": "09:30", "item": "ml1", "kind": "micro_lesson"},
+    {"date": "2026-07-08", "time": "10:00", "item": "q1", "kind": "practice_question"},
+    {"date": "2026-07-10", "time": "09:30", "item": "ml2", "kind": "micro_lesson"},
+    {"date": "2026-07-13", "time": "09:30", "item": "ml3", "kind": "micro_lesson"},
+    {"date": "2026-07-15", "time": "10:00", "item": "q2", "kind": "practice_question"},
+    {"date": "2026-07-17", "time": "09:30", "item": "ml4", "kind": "micro_lesson"},
+    {"date": "2026-07-20", "time": "10:00", "item": "q3", "kind": "practice_question"},
+    {"date": "2026-07-22", "time": "09:30", "item": "ml5", "kind": "micro_lesson"},
+    {"date": "2026-07-24", "time": "10:00", "item": "q4", "kind": "practice_question"},
+    {"date": "2026-07-27", "time": "10:00", "item": "q5", "kind": "practice_question"}
+  ],
+  "note": "Calendar writes are stubbed for this demo — the schedule above represents what would be sent to the trainee's Outlook."
+}

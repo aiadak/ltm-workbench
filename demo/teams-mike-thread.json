@@ -1,0 +1,44 @@
+{
+  "meta": {
+    "source": "Microsoft Teams (uploaded)",
+    "tenant": "travelers.onmicrosoft.com",
+    "channelId": "19:property-claims-hartford@thread.tacv2",
+    "channelName": "property-claims-hartford",
+    "graph_query": "$filter=channelId eq 'property-claims-hartford' and createdDateTime ge 2026-05-01",
+    "pulled_at": "2026-07-01T20:00:00Z",
+    "total": 4
+  },
+  "messages": [
+    {
+      "id": "1748001000000",
+      "createdDateTime": "2026-05-20T09:00:00Z",
+      "from": {"user": {"displayName": "Mike Karolczak", "userIdentityType": "aadUser"}},
+      "messageType": "message",
+      "importance": "normal",
+      "body": {"contentType": "html", "content": "<p>Team — flagging CL-108300 as canonical for the retirement handoff. Everything about this file follows the panel-cause playbook to the letter. Sarah, please shadow me on the close-out call today.</p>"},
+      "reactions": [{"reactionType": "like", "user": {"displayName": "Sarah Lin"}}]
+    },
+    {
+      "id": "1748690000000",
+      "createdDateTime": "2026-05-28T14:22:00Z",
+      "from": {"user": {"displayName": "Sarah Lin"}},
+      "messageType": "message",
+      "body": {"contentType": "html", "content": "<p>@Mike quick question — CL-108321 came in as panel-cause but marshal broke it out as wiring on Day 8. Reserve just went up 37%. That's the wiring exception in the playbook, right?</p>"},
+      "replies": [
+        {"id": "1748691000000", "createdDateTime": "2026-05-28T14:30:00Z", "from": {"user": {"displayName": "Mike Karolczak"}}, "body": {"contentType": "html", "content": "<p>Textbook. Expect 30-40% upward on wiring reclassifications. Preserve the wiring anyway — evidence chain is still valuable even without recall.</p>"}}
+      ]
+    },
+    {
+      "id": "1750100000000",
+      "createdDateTime": "2026-06-14T15:00:00Z",
+      "from": {"user": {"displayName": "James Whitfield (Mgr)"}},
+      "body": {"contentType": "html", "content": "<p>Just closed the Q2 review on Mike's book. Reserve accuracy within 8% on 27 of 30 files. That's the discipline we want to codify in the playbook before April.</p>"}
+    },
+    {
+      "id": "1751200000000",
+      "createdDateTime": "2026-06-27T20:00:00Z",
+      "from": {"user": {"displayName": "Mike Karolczak"}},
+      "body": {"contentType": "html", "content": "<p>Retirement countdown: 34 days. Sarah, tomorrow we walk through the 3 hard exception cases together. The wiring reclass, the unrelated-prior, and the no-4A recall path.</p>"}
+    }
+  ]
+}

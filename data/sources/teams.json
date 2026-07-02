@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "source": "Microsoft Teams",
+    "tenant": "travelers.onmicrosoft.com",
+    "channelId": "19:property-claims-hartford@thread.tacv2",
+    "channelName": "property-claims-hartford",
+    "graph_query": "$filter=from/user/id eq 'mkarolczak-guid' and createdDateTime ge 2024-06-01",
+    "pulled_at": "2026-06-30T22:14:03Z",
+    "total": 6
+  },
+  "messages": [
+    {
+      "id": "1720001120000",
+      "createdDateTime": "2024-07-03T09:18:40Z",
+      "from": {"user": {"displayName": "Mike Karolczak", "userIdentityType": "aadUser"}},
+      "channelIdentity": {"channelId": "19:property-claims-hartford@thread.tacv2"},
+      "messageType": "message",
+      "importance": "normal",
+      "body": {"contentType": "html", "content": "<p>Team — heads up, another FPE Stab-Lok match on CL-106011. That's four in 12 months. Might be worth flagging to subrogation as a class candidate.</p>"},
+      "reactions": [{"reactionType": "like", "user": {"displayName": "Karen Sullivan"}}, {"reactionType": "heart", "user": {"displayName": "James Whitfield"}}]
+    },
+    {
+      "id": "1725881200000",
+      "createdDateTime": "2024-09-09T14:22:00Z",
+      "from": {"user": {"displayName": "Sarah Lin"}},
+      "messageType": "message",
+      "body": {"contentType": "html", "content": "<p>@Mike — question on CL-106744, insured has no prior loss but panel signature is clean. Do I ROR?</p>"},
+      "replies": [
+        {"id": "1725881560000", "createdDateTime": "2024-09-09T14:29:20Z", "from": {"user": {"displayName": "Mike Karolczak"}}, "body": {"contentType": "html", "content": "<p>No prior loss = no ROR unless there's another signal. Preserve the panel regardless. Recall path is still open.</p>"}}
+      ]
+    },
+    {
+      "id": "1731440000000",
+      "createdDateTime": "2024-11-12T20:00:00Z",
+      "from": {"user": {"displayName": "Mike Karolczak"}},
+      "messageType": "message",
+      "body": {"contentType": "html", "content": "<p>Updated the panel-cause tells wiki page (Confluence PROPCL 298471234). Added the two new phrases we heard on CL-107091 and CL-107212.</p>"}
+    },
+    {
+      "id": "1737302000000",
+      "createdDateTime": "2025-01-19T16:33:20Z",
+      "from": {"user": {"displayName": "James Whitfield (Mgr)"}},
+      "body": {"contentType": "html", "content": "<p>Mike — nice work on CL-107581. Reserve discipline is textbook.</p>"}
+    },
+    {
+      "id": "1740090000000",
+      "createdDateTime": "2025-02-20T21:00:00Z",
+      "from": {"user": {"displayName": "Mike Karolczak"}},
+      "body": {"contentType": "html", "content": "<p>FYI — CL-108088 origin came back clean panel-cause. Releasing ROR tomorrow morning after I call the insured.</p>"}
+    },
+    {
+      "id": "1741562400000",
+      "createdDateTime": "2025-03-10T14:00:00Z",
+      "from": {"user": {"displayName": "Mike Karolczak"}},
+      "body": {"contentType": "html", "content": "<p>Retirement countdown: 51 days. Sarah, we should walk through CL-108214 together this week — it's the canonical file for the playbook I'm leaving behind.</p>"}
+    }
+  ]
+}

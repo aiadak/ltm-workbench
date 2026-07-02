@@ -1,0 +1,30 @@
+{
+  "entities": [
+    {"name": "Endorsement 4A", "type": "policy_endorsement", "source": "CL-108214"},
+    {"name": "HO-3", "type": "policy_form", "source": "CL-108214"},
+    {"name": "Panel-cause fire", "type": "loss_cause", "source": "int_2025_04_15"},
+    {"name": "Prior loss history", "type": "risk_signal", "source": "int_2025_04_15"},
+    {"name": "Manufacturer recall", "type": "subrogation_source", "source": "int_2025_04_22"},
+    {"name": "Reservation of Rights", "type": "coverage_action", "source": "int_2025_04_15"},
+    {"name": "ALE", "type": "coverage_component", "source": "int_2025_04_22"}
+  ],
+  "decision_rules": [
+    {"if": "Endorsement 4A present AND prior loss history AND panel-cause signature", "then": "Issue ROR letter; call insured to explain before letter arrives", "source": "int_2025_04_15"},
+    {"if": "First 10 days of a large fire claim", "then": "Hold ALE conservative; commit only to two weeks initially", "source": "int_2025_04_22"},
+    {"if": "Origin report identifies specific panel model in active recall", "then": "Open subrogation and preserve the panel as evidence", "source": "int_2025_04_22"},
+    {"if": "Origin report clears panel-cause with no manufacturer defect", "then": "Release ROR the same day; call insured before letter", "source": "int_2025_04_15"},
+    {"if": "Reserve setting on a novel-pattern fire", "then": "Set to median outcome for the pattern; mark review Day 10 and Day 30", "source": "int_2025_04_22"}
+  ],
+  "exception_patterns": [
+    {"pattern": "Cause reads as panel but is actually branch wiring", "resolution": "Wait for fire marshal breakdown before locking reserve; expect 30–40% reserve upward revision", "source": "CL-105412"},
+    {"pattern": "Prior loss present but from unrelated cause family (e.g. water)", "resolution": "Do not automatically ROR; treat as clean panel-cause absent other signals", "source": "CL-106011"},
+    {"pattern": "Panel-cause without Endorsement 4A", "resolution": "Still preserve the panel; recall subro still available even without 4A dwelling extension", "source": "int_2025_04_22"}
+  ],
+  "heuristics": [
+    {"text": "The tell for me is always three things stacked — 4A, prior loss, and something in the first-notice that reads like a panel cause.", "invoked_when": "FNOL review for large fire claims", "source": "int_2025_04_15"},
+    {"text": "You reserve for what you know, not what you fear.", "invoked_when": "Initial reserve setting", "source": "int_2025_04_22"},
+    {"text": "Preserve the panel. Always. Even in the small fires.", "invoked_when": "Any panel-cause fire regardless of reserve size", "source": "int_2025_04_22"},
+    {"text": "The panel manufacturers have been on notice for a decade.", "invoked_when": "Origin report calls out a specific panel model", "source": "int_2025_04_15"},
+    {"text": "That's how you keep a customer for life — call before the letter, call the day it clears.", "invoked_when": "Any ROR communication", "source": "int_2025_04_15"}
+  ]
+}

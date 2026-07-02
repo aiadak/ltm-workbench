@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "source": "ServiceNow",
+    "instance": "travelersprod.service-now.com",
+    "table": "incident",
+    "query": "assigned_to.user_name=mkarolczak^state=6^opened_at>=javascript:gs.daysAgoStart(730)",
+    "pulled_at": "2026-06-30T22:14:03Z",
+    "total": 8
+  },
+  "result": [
+    {
+      "sys_id": "a8f7c4b12ea3410e8b7d1e9c6f1a2b34",
+      "number": "INC0012845",
+      "short_description": "Property claim workbench — reserve exceeds soft limit (CL-105619)",
+      "description": "Reserve on CL-105619 raised to $104,900 total-loss dwelling. Requires manager sign-off per policy Sect 4.2. Recommend approve — total loss dwelling with 4A dwelling extension, panel-cause with active recall, subrogation open.",
+      "state": "6",
+      "state_label": "Resolved",
+      "priority": "3 - Moderate",
+      "category": "Claim Operations",
+      "subcategory": "Reserve Approval",
+      "opened_at": "2024-06-08 14:22:11",
+      "closed_at": "2024-06-11 17:00:04",
+      "opened_by": {"name": "Property Claims Rules Engine", "user_name": "prop.rules"},
+      "assigned_to": {"name": "Mike Karolczak", "user_name": "mkarolczak"},
+      "close_notes": "Approved. Total loss dwelling under HO-3 + 4A. Manager: J. Whitfield. Subro reference: SUB-0088-2024.",
+      "work_notes": [
+        {"created": "2024-06-08 14:41:00", "user": "mkarolczak", "text": "Escalating for sign-off. Panel-cause with recall match, subro will offset."},
+        {"created": "2024-06-10 09:18:00", "user": "jwhitfield", "text": "Reviewed. Approve. Confirm subro reference filed before close."}
+      ]
+    },
+    {
+      "sys_id": "b3d4e5f67a89012c3d4e5f6789012345",
+      "number": "INC0012901",
+      "short_description": "Manufacturer recall check — panel model FPE Stab-Lok (CL-106244)",
+      "state": "6",
+      "state_label": "Resolved",
+      "priority": "4 - Low",
+      "category": "Subrogation",
+      "subcategory": "Recall Verification",
+      "opened_at": "2024-07-31 09:44:00",
+      "closed_at": "2024-08-05 15:12:00",
+      "assigned_to": {"name": "Mike Karolczak", "user_name": "mkarolczak"},
+      "close_notes": "Model confirmed inside active recall window. Subro file opened SUB-0102-2024."
+    },
+    {
+      "sys_id": "c1f2e3d45b67890a1b2c3d4e5f678901",
+      "number": "INC0013102",
+      "short_description": "ROR letter template — panel-cause fire (CL-106861)",
+      "state": "6",
+      "state_label": "Resolved",
+      "priority": "4 - Low",
+      "category": "Claim Operations",
+      "subcategory": "Correspondence",
+      "opened_at": "2024-10-04 08:33:00",
+      "closed_at": "2024-10-04 12:11:00",
+      "assigned_to": {"name": "Mike Karolczak", "user_name": "mkarolczak"},
+      "close_notes": "Standard 4A/prior/panel ROR letter used from template ROR-4A-01. Phone-first courtesy call logged prior to letter dispatch."
+    },
+    {
+      "sys_id": "d2e3f4a5b6789012c3d4e5f6789012ab",
+      "number": "INC0013218",
+      "short_description": "Subrogation intake — CL-107331 (Total loss, panel)",
+      "state": "6",
+      "state_label": "Resolved",
+      "priority": "3 - Moderate",
+      "category": "Subrogation",
+      "opened_at": "2024-11-25 10:05:00",
+      "closed_at": "2024-12-09 17:11:00",
+      "assigned_to": {"name": "Mike Karolczak", "user_name": "mkarolczak"},
+      "close_notes": "SUB-0141-2024 filed. Manufacturer notified via certified mail."
+    },
+    {
+      "sys_id": "e3f4a5b6c78901234d5e6f7890123abc",
+      "number": "INC0013287",
+      "short_description": "ALE hold extension request — CL-107841",
+      "state": "6",
+      "state_label": "Resolved",
+      "priority": "3 - Moderate",
+      "opened_at": "2025-01-30 15:22:00",
+      "closed_at": "2025-02-01 09:00:00",
+      "assigned_to": {"name": "Mike Karolczak", "user_name": "mkarolczak"},
+      "close_notes": "ALE extended past 10-day hold pending origin. Insured notified by phone."
+    },
+    {"sys_id": "f4a5b6c78901234d5e6f7890123abcde", "number": "INC0013401", "short_description": "Reserve review Day 30 — CL-107841", "state": "6", "state_label": "Resolved", "priority": "4 - Low", "opened_at": "2025-02-19 09:14:00", "closed_at": "2025-02-19 11:44:00", "assigned_to": {"name": "Mike Karolczak", "user_name": "mkarolczak"}, "close_notes": "No revision. Subro pending."},
+    {"sys_id": "a5b6c78901234d5e6f7890123abcdef0", "number": "INC0013512", "short_description": "SIU courtesy notice — CL-108214", "state": "6", "state_label": "Resolved", "priority": "4 - Low", "opened_at": "2025-03-06 14:00:00", "closed_at": "2025-03-06 14:40:00", "assigned_to": {"name": "Mike Karolczak", "user_name": "mkarolczak"}, "close_notes": "SIU courtesy notice logged. No investigation opened."},
+    {"sys_id": "b6c78901234d5e6f7890123abcdef012", "number": "INC0013605", "short_description": "Reserve upward revision — CL-108214 (post-origin)", "state": "6", "state_label": "Resolved", "priority": "3 - Moderate", "opened_at": "2025-03-14 10:22:00", "closed_at": "2025-03-14 12:00:00", "assigned_to": {"name": "Mike Karolczak", "user_name": "mkarolczak"}, "close_notes": "Reserve moved $69,000 → $78,000 per intermediate origin. Day 30 review scheduled."}
+  ]
+}

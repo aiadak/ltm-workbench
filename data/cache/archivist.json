@@ -1,0 +1,26 @@
+{
+  "sme_id": "sme_mike_karolczak",
+  "sources_swept": [
+    {"name": "Jira", "status": "connected_fixture_fallback", "tickets_returned": 12},
+    {"name": "ServiceNow", "status": "connected_fixture_fallback", "tickets_returned": 8},
+    {"name": "Confluence", "status": "connected_fixture_fallback", "pages_returned": 4},
+    {"name": "Teams", "status": "connected_fixture_fallback", "threads_returned": 6}
+  ],
+  "date_range": {"from": "2024-01-01", "to": "2025-12-31"},
+  "corpus_summary": {
+    "total_tickets": 30,
+    "date_range_covered": "2024-01-11 to 2025-03-27",
+    "loss_type_distribution": {"fire": 30},
+    "policy_distribution": {"HO-3": 30},
+    "endorsement_distribution": {"4A": 18, "none": 12},
+    "prior_loss_share": 0.5,
+    "panel_cause_share": 0.6,
+    "avg_reserve_delta_pct": 18.4
+  },
+  "recent_sweeps": [
+    {"ts": "2026-06-30T22:14:03Z", "duration_ms": 4820, "sources": 4, "records": 30},
+    {"ts": "2026-06-30T04:14:01Z", "duration_ms": 4711, "sources": 4, "records": 30},
+    {"ts": "2026-06-29T22:14:02Z", "duration_ms": 4956, "sources": 4, "records": 29}
+  ],
+  "normalization_notes": "Haiku pass mapped Jira issue schema, ServiceNow incident schema, and Confluence page schema into the unified ticket record used by downstream agents. Field-level mapping table available on request."
+}

@@ -1,0 +1,42 @@
+{
+  "meta": {
+    "source": "Confluence Cloud (uploaded)",
+    "instance": "travelers.atlassian.net/wiki",
+    "space": "PROPCL",
+    "cql": "space = PROPCL AND lastModified >= 2026-05-01",
+    "pulled_at": "2026-07-01T20:00:00Z",
+    "total": 3
+  },
+  "results": [
+    {
+      "id": "298500001",
+      "type": "page",
+      "status": "current",
+      "title": "Cold-weather panel-cause reserve pattern (Karolczak update)",
+      "space": {"key": "PROPCL", "name": "Property Claims — Knowledge"},
+      "version": {"number": 1, "by": {"displayName": "Mike Karolczak"}, "when": "2026-06-05T14:00:00-0400"},
+      "labels": ["fire", "panel-cause", "edge-case", "cold-weather", "reserve-discipline"],
+      "body": {"storage": {"value": "<h2>Cold-weather reserve premium</h2><p>Panel-cause fires occurring Nov through Feb trend 15 percent above pattern median. Cause: displaced-family ALE inflation during heating season. Do not adjust initial reserve upward. Instead schedule a mandatory Day 15 review — not the standard Day 30 — because ALE decisions accelerate in this window.</p><h2>Escalation trigger</h2><p>If ALE exceeds $4,500 per week by Day 12, escalate to manager for extension pre-approval before Day 20. Historical data across 30 tickets shows this is where reserve drift is expensive.</p>", "representation": "storage"}}
+    },
+    {
+      "id": "298500002",
+      "type": "page",
+      "status": "current",
+      "title": "Manufacturer recall database — panel model lookup",
+      "space": {"key": "PROPCL", "name": "Property Claims — Knowledge"},
+      "version": {"number": 3, "by": {"displayName": "Mike Karolczak"}, "when": "2026-06-12T09:11:00-0400"},
+      "labels": ["subrogation", "recall", "manufacturer", "reference"],
+      "body": {"storage": {"value": "<h2>Active recalls (as of Q2 2026)</h2><ul><li>FPE Stab-Lok — active since 2018, ongoing</li><li>Zinsco Sylvania — active since 2020, ongoing</li><li>Challenger — active 2019-2025, closed</li></ul><h2>Search process</h2><ol><li>Get exact model number from fire marshal report</li><li>Check against active list above</li><li>If match, open subrogation file same day</li><li>Preserve panel with photo documentation</li></ol>", "representation": "storage"}}
+    },
+    {
+      "id": "298500003",
+      "type": "page",
+      "status": "current",
+      "title": "The no-4A recall path — a common junior mistake",
+      "space": {"key": "PROPCL", "name": "Property Claims — Knowledge"},
+      "version": {"number": 2, "by": {"displayName": "Mike Karolczak"}, "when": "2026-06-20T16:00:00-0400"},
+      "labels": ["fire", "panel-cause", "training", "exception"],
+      "body": {"storage": {"value": "<h2>Preserve the panel anyway</h2><p>Junior adjusters see a small fire with no Endorsement 4A on the policy and assume there's no subrogation path. This is wrong. Manufacturer recall subrogation is available on ANY panel-cause fire regardless of endorsement. Endorsement 4A only affects dwelling extension exposure — not the mechanical subro path.</p><h2>Rule</h2><p>Preserve the panel on every panel-cause fire. Every one. Even the small ones. The chain of custody is cheap; recovery is meaningful to the book.</p>", "representation": "storage"}}
+    }
+  ]
+}
