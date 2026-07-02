@@ -13,8 +13,11 @@
   .header-bar { background: var(--ink); color: #fff; }
   .brand-red { color: var(--travelers-red); }
   .bg-brand-red { background: var(--travelers-red); }
-  .agent-card { transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; cursor: pointer; }
+  .agent-card { transition: all .2s ease; cursor: pointer; }
   .agent-card:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(15,18,22,.12); border-color: var(--travelers-red); }
+  .agent-card.active { border-color: var(--travelers-red); box-shadow: 0 10px 40px rgba(184,35,42,.18); }
+  .agent-card.done { opacity: .6; }
+  .agent-card.done .agent-title::after { content: ' ✓'; color: #16a34a; }
   .kpi-card { border-left: 4px solid var(--travelers-red); }
   .pill { display: inline-flex; align-items: center; gap: .35rem; padding: .15rem .55rem; font-size: .7rem; font-weight: 600; border-radius: 999px; letter-spacing: .02em; }
   .pill-real { background: #dcfce7; color: #166534; }
@@ -22,7 +25,6 @@
   .pill-auto { background: #dbeafe; color: #1e3a8a; }
   .pill-hitl { background: #fef3c7; color: #92400e; }
   .pill-draft { background: #fee2e2; color: #991b1b; }
-  .pill-approved { background: #dcfce7; color: #166534; }
   .tab-btn.active { border-color: var(--travelers-red); color: var(--travelers-red); }
   .pulse-btn { animation: pulseBtn 1.4s ease-in-out infinite; }
   @keyframes pulseBtn { 0%,100% { box-shadow: 0 0 0 0 rgba(184,35,42,.45); } 50% { box-shadow: 0 0 0 10px rgba(184,35,42,0); } }
@@ -31,8 +33,8 @@
   code, pre { font-family: 'JetBrains Mono', ui-monospace, monospace; }
   pre { background: #0f1216; color: #e5e7eb; padding: 1rem; border-radius: 8px; font-size: .78rem; overflow-x: auto; }
   .agent-icon { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; background: #f3f4f6; }
-  details > summary { cursor: pointer; }
-  .sticky-side { position: sticky; top: 1rem; }
+  .scene-panel { animation: slideDown .3s ease; }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 </head>
 <body class="min-h-screen">
@@ -52,55 +54,34 @@
     </div>
     <nav class="flex items-center gap-1">
       <button class="tab-btn active px-4 py-2 border-b-2 border-transparent text-sm font-medium text-white" data-tab="overview">Overview</button>
-      <button class="tab-btn px-4 py-2 border-b-2 border-transparent text-sm font-medium text-gray-300" data-tab="run">Run flow</button>
       <button class="tab-btn px-4 py-2 border-b-2 border-transparent text-sm font-medium text-gray-300" data-tab="map">System Map</button>
     </nav>
-    <div class="text-xs text-gray-400">v8 · SME Knowledge Retention</div>
+    <div class="text-xs text-gray-400">v9 · Unified experience</div>
   </div>
 </header>
 
 <main class="max-w-7xl mx-auto px-6 py-8">
 
   <section id="tab-overview" class="tab-panel">
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
+
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
       <div class="kpi-card bg-white p-5 rounded-lg shadow-sm"><div class="text-xs uppercase tracking-wider text-gray-500">SMEs Interviewed</div><div class="font-serif text-4xl font-bold mt-1">47</div><div class="text-xs text-green-700 mt-1">+3 this month</div></div>
       <div class="kpi-card bg-white p-5 rounded-lg shadow-sm"><div class="text-xs uppercase tracking-wider text-gray-500">Sessions Completed</div><div class="font-serif text-4xl font-bold mt-1">189</div><div class="text-xs text-green-700 mt-1">+18 this week</div></div>
       <div class="kpi-card bg-white p-5 rounded-lg shadow-sm"><div class="text-xs uppercase tracking-wider text-gray-500">Playbooks Finalized</div><div class="font-serif text-4xl font-bold mt-1">32</div><div class="text-xs text-green-700 mt-1">+4 this month</div></div>
       <div class="kpi-card bg-white p-5 rounded-lg shadow-sm"><div class="text-xs uppercase tracking-wider text-gray-500">Copilots Active</div><div class="font-serif text-4xl font-bold mt-1">12 <span class="text-sm font-normal text-gray-500">live</span></div><div class="text-xs text-green-700 mt-1">All healthy</div></div>
       <div class="kpi-card bg-white p-5 rounded-lg shadow-sm"><div class="text-xs uppercase tracking-wider text-gray-500">Trainees Coached</div><div class="font-serif text-4xl font-bold mt-1">84</div><div class="text-xs text-green-700 mt-1">+11 this week</div></div>
     </div>
-    <h2 class="font-serif text-3xl mb-2">Twelve agents · four pillars</h2>
-    <p class="text-gray-600 max-w-3xl mb-6">Capture the tacit judgment of retiring SMEs, structure it into a decision-ready knowledge layer, validate it through the SME, and dispense it back into live claims and underwriting workflows. Click any agent for its detail view.</p>
+
+    <div class="flex items-baseline justify-between mb-2">
+      <h2 class="font-serif text-3xl">Twelve agents · four pillars</h2>
+      <div class="text-xs text-gray-500"><span id="progress-label">0 of 12 activated</span></div>
+    </div>
+    <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden mb-4">
+      <div id="progress" class="progress-bar h-full" style="width:0%"></div>
+    </div>
+    <p class="text-gray-600 max-w-3xl mb-6">Click any agent to run it live and see its output. Then use <b>Next agent</b> to advance the pipeline — the whole story unfolds in one page.</p>
+
     <div id="pillar-grid" class="space-y-8"></div>
-  </section>
-
-  <section id="tab-agent" class="tab-panel hidden">
-    <button id="back-to-overview" class="text-sm text-gray-600 hover:text-brand-red mb-4">&larr; Back to Overview</button>
-    <div id="agent-detail"></div>
-    <div class="flex justify-between mt-8 pt-6 border-t">
-      <button id="agent-prev" class="text-sm text-gray-600 hover:text-brand-red">&larr; Previous agent</button>
-      <button id="agent-next" class="text-sm text-gray-600 hover:text-brand-red">Next agent &rarr;</button>
-    </div>
-  </section>
-
-  <section id="tab-run" class="tab-panel hidden">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-      <aside class="md:col-span-1">
-        <div class="sticky-side">
-          <div class="text-xs uppercase tracking-wider text-gray-500 mb-2">Pipeline</div>
-          <ol id="run-sidebar" class="space-y-1 text-sm"></ol>
-          <div class="mt-4">
-            <div class="text-xs text-gray-500 mb-1">Progress</div>
-            <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden"><div id="progress" class="progress-bar h-full" style="width:0%"></div></div>
-            <div id="progress-label" class="text-xs text-gray-500 mt-1">0 of 12</div>
-          </div>
-        </div>
-      </aside>
-      <div class="md:col-span-3">
-        <div id="run-scene" class="bg-white rounded-lg shadow-sm p-8 min-h-[520px]"></div>
-        <div class="mt-4 flex gap-3"><button id="run-again" class="px-4 py-2 text-sm border rounded-md hover:bg-gray-100">&#8635; Run again</button></div>
-      </div>
-    </div>
   </section>
 
   <section id="tab-map" class="tab-panel hidden">
@@ -120,82 +101,58 @@
 </main>
 
 <footer class="max-w-7xl mx-auto px-6 py-8 text-xs text-gray-500 text-center border-t mt-16">
-  Travelers · LTM Workbench · v8 · Capture &rarr; Structure &rarr; Validate &rarr; Activate.
+  Travelers · LTM Workbench · v9 · Capture &rarr; Structure &rarr; Validate &rarr; Activate.
 </footer>
 
 <script>
-// ============= AGENT REGISTRY (inline) =============
 const AGENTS = [
-  { id: "observer", pillar: 1, pillarName: "Capture", build: "MOCK", autonomy: "AUTO", displayName: "Observer",
-    tagline: "Behavioral capture — screen traces of expert work.",
-    what: "Instruments the SME's workbench during real work. Records mouse, hover, file opens, searches, reserve edits — a structured trace that reveals what the expert actually does, not just what they say." },
-  { id: "interviewer", pillar: 1, pillarName: "Capture", build: "MOCK", autonomy: "HITL", displayName: "Interviewer",
-    tagline: "Weekly conversational sessions — questions from what the SME hasn't yet explained.",
-    what: "Runs weekly interviews with the SME. Questions generated from gaps in the extracted knowledge. Transcripts feed the Extractor." },
-  { id: "archivist", pillar: 1, pillarName: "Capture", build: "REAL", autonomy: "AUTO", displayName: "Archivist",
-    tagline: "Sweeps Jira, ServiceNow, Confluence, Teams for the SME's 24 months of resolved work.",
-    what: "Read-only sweep of connected sources. Real MCP/API pulls where creds allow; synthetic records otherwise. Haiku normalization maps each schema into a unified ticket record.", apiCall: "/api/archivist" },
-  { id: "extractor", pillar: 2, pillarName: "Structure", build: "REAL", autonomy: "AUTO", displayName: "Extractor",
-    tagline: "Strict-JSON extraction · entities, decision rules, exceptions, heuristics — every item source-cited.",
-    what: "Reads ticket + transcript, returns strict JSON of entities, decision rules, exception patterns, retention heuristics. Every item carries a source pointer. Uses SME's own language.", apiCall: "/api/extract" },
-  { id: "graph", pillar: 2, pillarName: "Structure", build: "REAL", autonomy: "AUTO", displayName: "Graph Builder",
-    tagline: "Sonnet proposes typed nodes + labeled edges from Extractor JSON.",
-    what: "Sonnet reads extraction JSON and proposes a typed knowledge graph with 6 node types and 10 directional labeled edges. Solid edges asserted; dashed edges inferred. Every edge carries provenance and confidence.", apiCall: "/api/graph" },
-  { id: "playbook", pillar: 2, pillarName: "Structure", build: "REAL", autonomy: "AUTO", displayName: "Playbook Composer",
-    tagline: "Sonnet drafts SOPs, resolved-tickets table, scenario mapping, exception library. Always DRAFT.",
-    what: "Turns extraction into a decision playbook: SOPs, applicability rules, reserve guidance, resolved-tickets table, ticket→scenario mapping, exception library. Never auto-publishes.", apiCall: "/api/playbook" },
-  { id: "scenario", pillar: 3, pillarName: "Validate", build: "MOCK", autonomy: "AUTO", displayName: "Scenario",
-    tagline: "Generated test cases (Easy / Medium / Hard) grounded in the ticket corpus.",
-    what: "Generates three test scenarios calibrated to the playbook — one easy, one medium, one hard. Grounded in ticket patterns already in the corpus." },
-  { id: "reviewer", pillar: 3, pillarName: "Validate", build: "REAL", autonomy: "HITL", displayName: "Reviewer Copilot",
-    tagline: "Approve / Edit / Reject — Edit re-prompts Claude live to redraft the step.",
-    what: "Presents the drafted playbook with per-item Approve, Edit, Reject controls. On Edit, correction sent to Sonnet to redraft. On Approve, playbook status flips to APPROVED.", apiCall: "/api/reprompt" },
-  { id: "analysis", pillar: 3, pillarName: "Validate", build: "MOCK", autonomy: "AUTO", displayName: "Analysis",
-    tagline: "Confidence, coverage gaps, scheduled follow-ups.",
-    what: "Weekly grading report on the playbook: confidence per rule, coverage gaps against corpus, auto-scheduled follow-ups with SME to close gaps." },
-  { id: "planner", pillar: 4, pillarName: "Activate", build: "MOCK", autonomy: "AUTO", displayName: "Planner",
-    tagline: "30 / 60 / 90-day onboarding roadmap for the trainee.",
-    what: "Turns approved playbooks into a 30/60/90-day onboarding roadmap for junior adjusters, plus daily map of activities." },
-  { id: "coach", pillar: 4, pillarName: "Activate", build: "REAL", autonomy: "AUTO", displayName: "Coach",
-    tagline: "Generates questions + micro-lessons from uploaded docs · reacts to what you feed it.",
-    what: "Given approved playbook + transcript + tickets + uploaded docs, generates 5 practice questions with answer keys and 5 micro-lessons. Reacts directly to uploaded documents.", apiCall: "/api/coach" },
-  { id: "copilot", pillar: 4, pillarName: "Activate", build: "MOCK", autonomy: "AUTO", displayName: "Knowledge Copilot",
-    tagline: "Proactive + reactive assist in the live workbench — ~6 min ETA on similar files.",
-    what: "Sits in the junior adjuster's live workbench. Reads FNOL, matches to approved playbooks in vector store, surfaces assist card with top-3 next actions and sources." }
+  { id: "observer", pillar: 1, pillarName: "Capture", build: "MOCK", autonomy: "AUTO", displayName: "Observer", tagline: "Behavioral capture — screen traces of expert work." },
+  { id: "interviewer", pillar: 1, pillarName: "Capture", build: "MOCK", autonomy: "HITL", displayName: "Interviewer", tagline: "Weekly sessions — questions from what the SME hasn't yet explained." },
+  { id: "archivist", pillar: 1, pillarName: "Capture", build: "REAL", autonomy: "AUTO", displayName: "Archivist", tagline: "Sweeps Jira, ServiceNow, Confluence, Teams for the SME's 24 months of work.", apiCall: "/api/archivist" },
+  { id: "extractor", pillar: 2, pillarName: "Structure", build: "REAL", autonomy: "AUTO", displayName: "Extractor", tagline: "Strict-JSON extraction — every item source-cited.", apiCall: "/api/extract" },
+  { id: "graph", pillar: 2, pillarName: "Structure", build: "REAL", autonomy: "AUTO", displayName: "Graph Builder", tagline: "Sonnet proposes typed nodes + labeled edges from Extractor JSON.", apiCall: "/api/graph" },
+  { id: "playbook", pillar: 2, pillarName: "Structure", build: "REAL", autonomy: "AUTO", displayName: "Playbook Composer", tagline: "Sonnet drafts SOPs, resolved-tickets, scenarios, exceptions. Always DRAFT.", apiCall: "/api/playbook" },
+  { id: "scenario", pillar: 3, pillarName: "Validate", build: "MOCK", autonomy: "AUTO", displayName: "Scenario", tagline: "Generated test cases (Easy / Medium / Hard) grounded in the ticket corpus." },
+  { id: "reviewer", pillar: 3, pillarName: "Validate", build: "REAL", autonomy: "HITL", displayName: "Reviewer Copilot", tagline: "Approve / Edit / Reject — Edit re-prompts Claude live.", apiCall: "/api/reprompt" },
+  { id: "analysis", pillar: 3, pillarName: "Validate", build: "MOCK", autonomy: "AUTO", displayName: "Analysis", tagline: "Confidence, coverage gaps, scheduled follow-ups." },
+  { id: "planner", pillar: 4, pillarName: "Activate", build: "MOCK", autonomy: "AUTO", displayName: "Planner", tagline: "30 / 60 / 90-day onboarding roadmap for the trainee." },
+  { id: "coach", pillar: 4, pillarName: "Activate", build: "REAL", autonomy: "AUTO", displayName: "Coach", tagline: "Questions + micro-lessons from uploaded documents.", apiCall: "/api/coach" },
+  { id: "copilot", pillar: 4, pillarName: "Activate", build: "MOCK", autonomy: "AUTO", displayName: "Knowledge Copilot", tagline: "Proactive + reactive assist in the live workbench — ~6 min ETA." }
 ];
 
-// ============= UTIL =============
-const $ = sel => document.querySelector(sel);
-const $$ = sel => Array.from(document.querySelectorAll(sel));
-const pill = (text, kind) => `<span class="pill pill-${kind}">${text}</span>`;
+const PILLARS = [
+  { n: 1, name: "Capture", desc: "Behavioral · Conversational · Archival" },
+  { n: 2, name: "Structure", desc: "Extraction · Graph · Playbook" },
+  { n: 3, name: "Validate", desc: "Scenario · Review · Analysis" },
+  { n: 4, name: "Activate", desc: "Planner · Coach · Copilot" }
+];
 
-// ============= TAB SWITCHING =============
+const state = { active: null, done: new Set() };
+
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const pill = (t, k) => `<span class="pill pill-${k}">${t}</span>`;
+
 function showTab(name) {
   $$('.tab-panel').forEach(p => p.classList.add('hidden'));
-  $$('.tab-btn').forEach(b => { b.classList.remove('active'); b.classList.add('text-gray-300'); b.classList.remove('text-white'); });
-  const target = document.getElementById(`tab-${name}`);
-  if (target) target.classList.remove('hidden');
+  $$('.tab-btn').forEach(b => { b.classList.remove('active','text-white'); b.classList.add('text-gray-300'); });
+  document.getElementById(`tab-${name}`)?.classList.remove('hidden');
   const btn = document.querySelector(`.tab-btn[data-tab="${name}"]`);
   if (btn) { btn.classList.add('active','text-white'); btn.classList.remove('text-gray-300'); }
-  if (name === 'run') startRunFlow();
 }
 $$('.tab-btn').forEach(b => b.addEventListener('click', () => showTab(b.dataset.tab)));
-document.getElementById('header-home')?.addEventListener('click', () => {
-  document.getElementById('tab-agent')?.classList.add('hidden');
-  showTab('overview');
-});
+document.getElementById('header-home').addEventListener('click', () => { state.active = null; state.done = new Set(); showTab('overview'); render(); });
 
-// ============= OVERVIEW GRID =============
-function renderPillarGrid() {
-  const pillars = [
-    { n: 1, name: "Capture", desc: "Behavioral · Conversational · Archival" },
-    { n: 2, name: "Structure", desc: "Extraction · Graph · Playbook" },
-    { n: 3, name: "Validate", desc: "Scenario · Review · Analysis" },
-    { n: 4, name: "Activate", desc: "Planner · Coach · Copilot" }
-  ];
+function updateProgress() {
+  const n = state.done.size;
+  const pct = Math.round((n / AGENTS.length) * 100);
+  document.getElementById('progress').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = `${n} of ${AGENTS.length} activated`;
+}
+
+function render() {
   const grid = document.getElementById('pillar-grid');
-  if (!grid) return;
-  grid.innerHTML = pillars.map(p => {
+  grid.innerHTML = PILLARS.map(p => {
     const agents = AGENTS.filter(a => a.pillar === p.n);
     return `<div>
       <div class="flex items-baseline justify-between mb-3">
@@ -203,182 +160,166 @@ function renderPillarGrid() {
         <div class="text-xs text-gray-500">${p.desc}</div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        ${agents.map(a => `<div class="agent-card bg-white p-5 rounded-lg shadow-sm border border-gray-200" data-agent-id="${a.id}">
-          <div class="flex items-start justify-between mb-3">
-            <div class="agent-icon brand-red">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/></svg>
-            </div>
-            <div class="flex gap-1">${pill(a.build, a.build==='REAL'?'real':'mock')}${pill(a.autonomy, a.autonomy==='AUTO'?'auto':'hitl')}</div>
-          </div>
-          <div class="font-serif text-lg font-semibold">${a.displayName}</div>
-          <div class="text-sm text-gray-600 mt-1">${a.tagline}</div>
-        </div>`).join('')}
+        ${agents.map(a => renderCard(a)).join('')}
       </div>
     </div>`;
   }).join('');
-  $$('#pillar-grid [data-agent-id]').forEach(el => el.addEventListener('click', () => showAgent(el.dataset.agentId)));
+  $$('#pillar-grid [data-agent-card]').forEach(el => el.addEventListener('click', (e) => {
+    if (e.target.closest('.no-toggle')) return;
+    activate(el.dataset.agentCard);
+  }));
+  updateProgress();
 }
 
-// ============= AGENT DETAIL =============
-function showAgent(id) {
+function renderCard(a) {
+  const isActive = state.active === a.id;
+  const isDone = state.done.has(a.id);
+  const cls = ['agent-card','bg-white','p-5','rounded-lg','shadow-sm','border','border-gray-200'];
+  if (isActive) cls.push('active','md:col-span-3');
+  if (isDone && !isActive) cls.push('done');
+  return `<div class="${cls.join(' ')}" data-agent-card="${a.id}">
+    <div class="flex items-start justify-between mb-3">
+      <div class="agent-icon brand-red"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/></svg></div>
+      <div class="flex gap-1">${pill(a.build, a.build==='REAL'?'real':'mock')}${pill(a.autonomy, a.autonomy==='AUTO'?'auto':'hitl')}</div>
+    </div>
+    <div class="agent-title font-serif text-lg font-semibold">${a.displayName}</div>
+    <div class="text-sm text-gray-600 mt-1">${a.tagline}</div>
+    ${isActive ? `<div class="scene-panel mt-4 pt-4 border-t" id="scene-${a.id}"><div class="text-gray-500 text-sm">Running&hellip;</div></div>` : ''}
+  </div>`;
+}
+
+async function activate(id) {
+  if (state.active === id) {
+    // Already active — clicking again collapses
+    state.done.add(id);
+    state.active = null;
+    render();
+    return;
+  }
+  state.active = id;
+  render();
   const a = AGENTS.find(x => x.id === id);
-  if (!a) return;
-  document.getElementById('tab-overview').classList.add('hidden');
-  document.getElementById('tab-agent').classList.remove('hidden');
-  document.getElementById('agent-detail').innerHTML = `
-    <div class="flex items-center justify-between mb-6">
-      <div>
-        <div class="text-xs uppercase tracking-widest text-gray-500">Pillar ${a.pillar} · ${a.pillarName}</div>
-        <h2 class="font-serif text-4xl mt-1">${a.displayName}</h2>
-        <div class="text-gray-600 mt-2">${a.tagline}</div>
-      </div>
-      <div class="flex gap-2">${pill(a.build, a.build==='REAL'?'real':'mock')}${pill(a.autonomy, a.autonomy==='AUTO'?'auto':'hitl')}</div>
-    </div>
-    <div class="bg-white p-6 rounded-lg shadow-sm mb-4">
-      <div class="text-xs uppercase tracking-wider text-gray-500 font-semibold mb-2">What it does</div>
-      <p>${a.what}</p>
-    </div>
-    ${a.apiCall ? `<div class="bg-white p-6 rounded-lg shadow-sm"><div class="text-xs uppercase tracking-wider text-gray-500 font-semibold mb-2">Endpoint</div><code>${a.apiCall}</code></div>` : ''}
-  `;
+  const scene = document.getElementById(`scene-${id}`);
+  if (!scene) return;
+  scene.innerHTML = await renderSceneBody(a);
+  // Add Next button
   const idx = AGENTS.findIndex(x => x.id === id);
-  document.getElementById('agent-prev').onclick = () => showAgent(AGENTS[(idx-1+AGENTS.length)%AGENTS.length].id);
-  document.getElementById('agent-next').onclick = () => showAgent(AGENTS[(idx+1)%AGENTS.length].id);
-  window.scrollTo(0,0);
-}
-document.getElementById('back-to-overview').addEventListener('click', () => {
-  document.getElementById('tab-agent').classList.add('hidden');
-  document.getElementById('tab-overview').classList.remove('hidden');
-});
-
-// ============= RUN FLOW =============
-const RUN_ORDER = ['observer','interviewer','archivist','extractor','graph','playbook','scenario','reviewer','analysis','planner','coach','copilot'];
-let runState = { i: 0, done: new Set() };
-
-function renderSidebar() {
-  document.getElementById('run-sidebar').innerHTML = RUN_ORDER.map((id, i) => {
-    const a = AGENTS.find(x => x.id === id);
-    const status = runState.done.has(id) ? '<span class="text-green-600">&#10003;</span>' : (i === runState.i ? '<span class="text-brand-red">&bull;</span>' : '<span class="text-gray-300">&#9711;</span>');
-    return `<li class="flex items-center gap-2 ${i === runState.i ? 'font-semibold' : ''}"><span class="w-4 text-center">${status}</span><span>${a.displayName}</span> <span class="ml-auto text-xs text-gray-400">${a.autonomy}</span></li>`;
-  }).join('');
-  const pct = Math.round((runState.done.size / RUN_ORDER.length) * 100);
-  document.getElementById('progress').style.width = pct + '%';
-  document.getElementById('progress-label').textContent = `${runState.done.size} of ${RUN_ORDER.length}`;
-}
-
-function startRunFlow() { if (!runState.__started) { runState.__started = true; renderStep(); } }
-document.getElementById('run-again').addEventListener('click', () => { runState = { i: 0, done: new Set(), __started: true }; renderStep(); });
-
-async function renderStep() {
-  renderSidebar();
-  const id = RUN_ORDER[runState.i];
-  if (!id) return renderComplete();
-  const a = AGENTS.find(x => x.id === id);
-  const scene = document.getElementById('run-scene');
-  let body = `<div class="text-gray-500 text-sm">Processing&hellip;</div>`;
-  scene.innerHTML = `
-    <div class="flex items-start justify-between mb-4">
-      <div>
-        <div class="text-xs uppercase tracking-widest text-gray-500">Step ${runState.i + 1} of 12 · Pillar ${a.pillar} · ${a.pillarName}</div>
-        <h2 class="font-serif text-3xl mt-1">${a.displayName}</h2>
-        <div class="text-gray-600 mt-1">${a.tagline}</div>
-      </div>
-      <div class="flex gap-2">${pill(a.build, a.build==='REAL'?'real':'mock')}${pill(a.autonomy, a.autonomy==='AUTO'?'auto':'hitl')}</div>
-    </div>
-    <div style="height:1px;background:#e5e7eb;margin-bottom:1rem"></div>
-    <div id="step-body">${body}</div>
-  `;
-  const stepBody = document.getElementById('step-body');
-  stepBody.innerHTML = await renderSceneBody(a);
-
-  const btn = document.createElement('div');
-  btn.className = 'mt-6 flex items-center gap-3 justify-end';
-  const marker = a.autonomy === 'HITL' ? '<span class="pill pill-hitl">HITL · your review needed</span>' : '<span class="pill pill-auto">AUTO · click when ready</span>';
-  const label = a.autonomy === 'HITL' ? 'Approve &amp; continue &rarr;' : 'Next &rarr;';
+  const nextAgent = AGENTS[idx + 1];
+  const btnRow = document.createElement('div');
+  btnRow.className = 'no-toggle mt-4 flex items-center gap-3 justify-end';
+  const marker = a.autonomy === 'HITL' ? '<span class="pill pill-hitl">HITL · your review needed</span>' : '<span class="pill pill-auto">AUTO</span>';
+  const nextLabel = nextAgent ? `Next → ${nextAgent.displayName}` : 'Finish';
   const cls = a.autonomy === 'HITL' ? 'pulse-btn bg-brand-red text-white' : 'bg-gray-900 text-white hover:bg-brand-red';
-  btn.innerHTML = `${marker}<button class="${cls} px-5 py-2 rounded-md text-sm font-semibold">${label}</button>`;
-  stepBody.appendChild(btn);
-  btn.querySelector('button').onclick = () => { runState.done.add(id); runState.i++; renderStep(); };
+  btnRow.innerHTML = `${marker}<button class="${cls} px-5 py-2 rounded-md text-sm font-semibold no-toggle">${nextLabel}</button>`;
+  scene.appendChild(btnRow);
+  btnRow.querySelector('button').onclick = (e) => {
+    e.stopPropagation();
+    state.done.add(id);
+    if (nextAgent) {
+      activate(nextAgent.id);
+      setTimeout(() => document.querySelector(`[data-agent-card="${nextAgent.id}"]`)?.scrollIntoView({ behavior:'smooth', block:'start' }), 100);
+    } else {
+      state.active = null;
+      render();
+    }
+  };
 }
 
 async function renderSceneBody(a) {
   switch (a.id) {
     case 'observer':
-      return `<p class="text-sm">Behavioral trace captured from Mike's workbench session on CL-108214: 16 events over ~48 minutes including reserve edits, note additions, SIU notification, recall bulletin lookup.</p>`;
+      return `<p class="text-sm text-gray-700 mb-2">Behavioral trace from Mike's workbench session on CL-108214:</p>
+        <div class="bg-gray-50 rounded p-3 text-xs space-y-1">
+          <div>0:12 · open_file FNOL.pdf</div><div>2:18 · search "prior loss same insured"</div><div>3:32 · read Endorsement 4A</div><div>5:55 · note "Panel-cause signature present…"</div><div>7:00 · reserve_edit → $69,000</div><div>10:20 · email SIU courtesy notice</div><div>24:10 · read recall bulletin</div><div>35:00 · reserve_edit → $78,000</div>
+        </div>`;
     case 'interviewer':
-      return `<div class="bg-gray-50 p-4 rounded text-sm"><p><b>Interviewer:</b> How do you know it's panel-cause from the first notice?</p><p class="mt-2"><b>Mike:</b> The language. "Popping sound before smoke," "lights flickered," fire concentrated at electrical service entrance. You develop an ear for it.</p></div>`;
+      return `<div class="bg-gray-50 p-3 rounded text-sm space-y-2">
+          <p><b>Interviewer:</b> How do you know it's panel-cause from the first notice?</p>
+          <p><b>Mike:</b> The language. "Popping sound before smoke," "lights flickered," fire concentrated at the electrical service entrance. You develop an ear for it.</p>
+          <p><b>Interviewer:</b> When do you decide to reserve rights?</p>
+          <p><b>Mike:</b> Prior loss plus 4A plus a panel signature — I reserve rights every time. Because 4A dwelling extension opens the exposure so wide I need the option.</p>
+        </div>`;
     case 'archivist':
-      return await liveCall('/api/archivist', d => `<p class="text-sm mb-3">Sweep complete. ${d.corpus_summary?.total_tickets || 30} records normalized from ${(d.sources_swept||[]).length} sources.</p>
-        <div class="grid grid-cols-4 gap-2 text-xs">${(d.sources_swept||[]).map(s => `<div class="border rounded p-2 bg-white"><b>${s.name}</b>: ${s.records || 0} records<br><span class="text-gray-500">${s.status}</span></div>`).join('')}</div>`);
+      return await liveCall('/api/archivist', d => `<p class="text-sm mb-3">Sweep complete. <b>${d.corpus_summary?.total_tickets || 30}</b> records normalized from ${(d.sources_swept||[]).length} sources for ${d.sme_name||'Mike'}.</p>
+        <div class="grid grid-cols-4 gap-2 text-xs">${(d.sources_swept||[]).map(s => `<div class="border rounded p-2 bg-white"><b>${s.name}</b><div class="mt-1">${s.records || 0} records</div><div class="text-gray-500 mt-1 text-[10px]">${s.status}</div></div>`).join('')}</div>`);
     case 'extractor':
-      return await liveCall('/api/extract', d => `<p class="text-sm mb-2">Structured extraction, every item source-cited.</p><div class="grid grid-cols-2 gap-3 text-xs">
-        <div><b>Decision rules (${d.decision_rules?.length||0})</b>${(d.decision_rules||[]).slice(0,3).map(r=>`<div class="bg-gray-50 p-2 mt-2 rounded"><b>if</b> ${r.if}<br><b>then</b> ${r.then}<div class="text-gray-500 mt-1">${r.source}</div></div>`).join('')}</div>
-        <div><b>Heuristics (${d.heuristics?.length||0})</b>${(d.heuristics||[]).slice(0,3).map(h=>`<div class="bg-gray-50 p-2 mt-2 rounded italic">"${h.text}"<div class="text-gray-500 not-italic mt-1">— ${h.source}</div></div>`).join('')}</div></div>`);
+      return await liveCall('/api/extract', d => `<p class="text-sm mb-2">Structured extraction from ticket + transcript.</p>
+        <div class="grid grid-cols-2 gap-3 text-xs">
+          <div><b>Decision rules (${d.decision_rules?.length||0})</b>${(d.decision_rules||[]).slice(0,3).map(r => `<div class="bg-gray-50 p-2 mt-2 rounded"><b>if</b> ${r.if}<br/><b>then</b> ${r.then}<div class="text-gray-500 mt-1">source: ${r.source}</div></div>`).join('')}</div>
+          <div><b>Heuristics (${d.heuristics?.length||0})</b>${(d.heuristics||[]).slice(0,3).map(h => `<div class="bg-gray-50 p-2 mt-2 rounded italic">"${h.text}"<div class="not-italic text-gray-500 mt-1">${h.source}</div></div>`).join('')}</div>
+        </div>`);
     case 'graph':
-      return await liveCall('/api/graph', d => `<p class="text-sm">Typed knowledge graph: ${d.meta?.nodes||34} nodes · ${d.meta?.edges||61} edges · avg confidence ${(d.meta?.confidence_avg||0.87).toFixed(2)}</p>
-        <div class="bg-gray-50 p-3 rounded text-xs mt-2">Node types: Claim, Rule, Exception, Person, Action, Entity<br>Edge types: hasLossType, coveredBy, hasEndorsement, triggers, guardedBy, defines, requires, authoredBy, approvedBy, resolvesWith</div>`);
+      return await liveCall('/api/graph', d => `<p class="text-sm mb-2">Typed knowledge graph: <b>${d.meta?.nodes||34} nodes</b> · <b>${d.meta?.edges||61} edges</b> · avg confidence ${(d.meta?.confidence_avg||0.87).toFixed(2)}</p>
+        <div class="bg-gray-50 p-3 rounded text-xs">
+          <div><b>Node types:</b> Claim, Rule, Exception, Person, Action, Entity</div>
+          <div class="mt-1"><b>Edge types:</b> hasLossType, coveredBy, hasEndorsement, triggers, guardedBy, defines, requires, authoredBy, approvedBy, resolvesWith</div>
+          <div class="mt-2"><b>Sample:</b> Fire Claim → coveredBy → HO-3; HO-3 → hasEndorsement → 4A; (4A + Prior Loss + Panel-cause) → triggers → ROR Rule; ROR Rule → defines → Reserve Discipline</div>
+        </div>`);
     case 'playbook':
-      return await liveCall('/api/playbook', d => `<div class="flex items-center justify-between mb-3"><div><div class="font-serif text-xl">${d.title||'Playbook'}</div><div class="text-xs text-gray-500">v${d.version||'2.0'} · ${d.author_sme||'Mike Karolczak'}</div></div>${pill(d.status||'DRAFT','draft')}</div>
+      return await liveCall('/api/playbook', d => `<div class="flex items-center justify-between mb-3"><div><div class="font-serif text-lg">${d.title||'Playbook'}</div><div class="text-xs text-gray-500">v${d.version||'2.0'} · author: ${d.author_sme||'Mike'}</div></div>${pill(d.status||'DRAFT','draft')}</div>
         <div class="text-xs uppercase text-gray-500 font-semibold mb-2">SOPs (${(d.sops||[]).length})</div>
-        <div class="space-y-2">${(d.sops||[]).slice(0,3).map(s=>`<div class="bg-white border rounded p-3 text-sm"><b>SOP #${s.n} — ${s.title}</b><div class="text-xs text-gray-600 mt-1">${s.rationale||''}</div></div>`).join('')}</div>`);
+        <div class="space-y-2">${(d.sops||[]).slice(0,4).map(s => `<div class="bg-white border rounded p-2 text-sm"><b>SOP #${s.n} — ${s.title}</b><div class="text-xs text-gray-600 mt-1">${s.rationale||''}</div></div>`).join('')}</div>
+        ${d.reserve_guidance ? `<div class="mt-3 bg-amber-50 p-2 rounded text-xs"><b>Reserve first-cut:</b> $${d.reserve_guidance.first_cut.low.toLocaleString()}–$${d.reserve_guidance.first_cut.high.toLocaleString()} (median $${d.reserve_guidance.first_cut.median.toLocaleString()})</div>` : ''}`);
     case 'scenario':
-      return `<div class="space-y-2">
-        <div class="bg-gray-50 p-3 rounded text-sm"><b>Easy:</b> HO-3 fire, no 4A, no prior, chimney flue. → Playbook does not apply.</div>
-        <div class="bg-gray-50 p-3 rounded text-sm"><b>Medium:</b> HO-3, 4A, no prior, panel. → Reserve median $46-58k. No ROR.</div>
-        <div class="bg-gray-50 p-3 rounded text-sm"><b>Hard:</b> Unrelated prior + panel signature, marshal flips to wiring Day 8. → No ROR, expect 30-40% reserve upward.</div>`;
+      return `<div class="space-y-2 text-sm">
+          <div class="bg-gray-50 p-3 rounded"><b>Easy:</b> HO-3, no 4A, no prior, chimney flue → Playbook does not apply.</div>
+          <div class="bg-gray-50 p-3 rounded"><b>Medium:</b> HO-3, 4A, no prior, panel → Reserve median $46-58k. No ROR.</div>
+          <div class="bg-gray-50 p-3 rounded"><b>Hard:</b> Unrelated prior + panel → marshal flips to wiring Day 8. No ROR, expect 30-40% reserve up.</div>
+        </div>`;
     case 'reviewer':
       return `<p class="text-sm mb-3">Reviewer nudges you. Approve, edit (re-prompts Claude), or reject each Playbook item.</p>
-        <div class="space-y-2"><div class="bg-white border rounded p-3 text-sm"><b>SOP #2 — Reserve setting discipline</b><div class="flex gap-2 mt-2 text-xs"><button class="px-3 py-1 bg-green-600 text-white rounded">Approve</button><button class="px-3 py-1 border rounded">Edit</button><button class="px-3 py-1 border border-red-300 text-red-700 rounded">Reject</button></div></div></div>`;
+        <div class="space-y-2 text-sm">
+          <div class="bg-white border rounded p-3"><b>SOP #2 — Reserve setting discipline</b><div class="flex gap-2 mt-2 text-xs no-toggle"><button class="px-3 py-1 bg-green-600 text-white rounded no-toggle" onclick="event.stopPropagation()">Approve</button><button class="px-3 py-1 border rounded no-toggle" onclick="event.stopPropagation()">Edit</button><button class="px-3 py-1 border border-red-300 text-red-700 rounded no-toggle" onclick="event.stopPropagation()">Reject</button></div></div>
+          <div class="bg-white border rounded p-3"><b>Exception ex1 — Wiring reclassification</b><div class="flex gap-2 mt-2 text-xs no-toggle"><button class="px-3 py-1 bg-green-600 text-white rounded no-toggle" onclick="event.stopPropagation()">Approve</button><button class="px-3 py-1 border rounded no-toggle" onclick="event.stopPropagation()">Edit</button><button class="px-3 py-1 border border-red-300 text-red-700 rounded no-toggle" onclick="event.stopPropagation()">Reject</button></div></div>
+        </div>`;
     case 'analysis':
       return `<p class="text-sm mb-3">Weekly grading report.</p>
-        <table class="text-xs w-full"><tr class="text-left text-gray-500 border-b"><th>Rule</th><th>Confidence</th><th>Coverage</th></tr>
+        <table class="text-xs w-full mb-3"><tr class="text-left text-gray-500 border-b"><th class="py-1">Rule</th><th>Confidence</th><th>Coverage</th></tr>
         <tr class="border-b"><td class="py-1">ROR when 4A+prior+panel</td><td>0.94</td><td>27/30 tickets</td></tr>
         <tr class="border-b"><td class="py-1">Hold ALE 10 days</td><td>0.90</td><td>high</td></tr>
-        <tr><td class="py-1">Preserve panel evidence</td><td>0.95</td><td>complete</td></tr></table>`;
+        <tr><td class="py-1">Preserve panel evidence</td><td>0.95</td><td>complete</td></tr></table>
+        <div class="text-xs text-gray-500"><b>Scheduled follow-ups:</b> Wed session — weekend-FNOL ALE (30 min); Fri session — unusual prior loss files</div>`;
     case 'planner':
       return `<div class="grid grid-cols-3 gap-3 text-xs">
-        <div class="bg-gray-50 p-3 rounded"><b>30 days</b><ul class="mt-2 list-disc ml-4"><li>Shadow 5 panel-cause fires</li><li>Reserve Setting course</li></ul></div>
-        <div class="bg-gray-50 p-3 rounded"><b>60 days</b><ul class="mt-2 list-disc ml-4"><li>Lead 3 straightforward files</li><li>ROR Communication practicum</li></ul></div>
-        <div class="bg-gray-50 p-3 rounded"><b>90 days</b><ul class="mt-2 list-disc ml-4"><li>5 panel-cause files solo</li><li>Certification exam</li></ul></div>`;
+          <div class="bg-gray-50 p-3 rounded"><b>30 days</b><ul class="mt-2 list-disc ml-4"><li>Shadow 5 panel-cause fires</li><li>Reserve Setting course</li><li>Pattern-Recognition quiz</li></ul></div>
+          <div class="bg-gray-50 p-3 rounded"><b>60 days</b><ul class="mt-2 list-disc ml-4"><li>Lead 3 straightforward files</li><li>ROR Communication practicum</li></ul></div>
+          <div class="bg-gray-50 p-3 rounded"><b>90 days</b><ul class="mt-2 list-disc ml-4"><li>5 panel-cause files solo</li><li>Certification exam</li></ul></div>
+        </div>`;
     case 'coach':
       return await liveCall('/api/coach', d => `<p class="text-sm mb-2">Coaching plan for <b>${d.trainee||'Sarah Lin'}</b>.</p>
         <div class="grid grid-cols-2 gap-3 text-xs">
-          <div><b>Practice questions (${(d.questions||[]).length})</b>${(d.questions||[]).slice(0,2).map(q=>`<div class="bg-gray-50 p-2 mt-2 rounded"><b>${q.difficulty}:</b> ${q.prompt}</div>`).join('')}</div>
-          <div><b>Micro-lessons (${(d.micro_lessons||[]).length})</b>${(d.micro_lessons||[]).slice(0,2).map(m=>`<div class="bg-gray-50 p-2 mt-2 rounded"><b>${m.title}</b> (${m.duration_min} min)</div>`).join('')}</div>
+          <div><b>Practice questions (${(d.questions||[]).length})</b>${(d.questions||[]).slice(0,2).map(q => `<div class="bg-gray-50 p-2 mt-2 rounded"><b>${q.difficulty}:</b> ${q.prompt}</div>`).join('')}</div>
+          <div><b>Micro-lessons (${(d.micro_lessons||[]).length})</b>${(d.micro_lessons||[]).slice(0,2).map(m => `<div class="bg-gray-50 p-2 mt-2 rounded"><b>${m.title}</b> (${m.duration_min} min)<div class="text-gray-600 mt-1">${m.summary}</div></div>`).join('')}</div>
         </div>`);
     case 'copilot':
-      return `<div class="bg-gray-50 p-3 rounded text-sm mb-3"><b>FNOL:</b> HO-3, 4A present, prior loss, insured reports popping and flickering.</div>
+      return `<div class="bg-gray-50 p-3 rounded text-sm mb-3"><b>FNOL:</b> HO-3, 4A present, prior loss, insured reports popping and flickering before smoke.</div>
         <div class="bg-red-50 border-l-4 border-brand-red p-4 rounded-r-md">
           <div class="text-xs text-gray-600">Assist card · confidence 0.94</div>
           <div class="font-medium">Playbook: Fire · Panel-cause · 4A · Prior Loss (v2.0)</div>
           <ol class="text-sm list-decimal ml-5 space-y-1 mt-2"><li>Set reserve $60-75k median</li><li>Hold ALE 10 days</li><li>Issue ROR — call insured first</li></ol>
           <div class="text-xs mt-3"><b>~6 min to first coverage action (vs 60-120 min unassisted)</b></div>
-        </div>`;
+        </div>
+        <div class="mt-3 text-center text-sm text-gray-600">Sarah closes the file in ~6 minutes. Mike's judgment lives on.</div>`;
     default: return '<div class="text-sm text-gray-500">No content.</div>';
   }
 }
 
 async function liveCall(endpoint, render) {
   try {
-    const r = await fetch(endpoint, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: '{}' });
+    const r = await fetch(endpoint, { method:'POST', headers:{'Content-Type':'application/json'}, body:'{}' });
+    if (!r.ok) throw new Error('http_' + r.status);
     const j = await r.json();
     const badge = j.source === 'live' ? '<span class="pill pill-real">LIVE</span>' : (j.source === 'synthetic' ? '<span class="pill pill-mock">SYNTHETIC</span>' : '<span class="pill pill-mock">CACHED</span>');
     return `<div class="mb-3 text-right">${badge}</div>` + render(j.data);
   } catch (err) {
-    return `<div class="text-red-600 text-sm">Endpoint not reachable — deploy to Vercel or run <code>vercel dev</code>.</div>`;
+    return `<div class="bg-amber-50 border-l-4 border-amber-500 p-3 text-sm rounded-r">
+      <b>Endpoint unreachable.</b> The demo can still walk through — this agent shows what the payload would look like once deployed to Vercel with serverless functions built.
+      <details class="mt-2 text-xs"><summary class="cursor-pointer">Debug info</summary><div class="mt-2">Called: <code>${endpoint}</code><br/>Error: ${err.message}</div></details>
+    </div>`;
   }
 }
 
-function renderComplete() {
-  renderSidebar();
-  document.getElementById('run-scene').innerHTML = `<div class="text-center py-16">
-    <div class="font-serif text-4xl mb-3">Run complete.</div>
-    <p class="text-gray-600 max-w-lg mx-auto mb-6">Twelve agents. One story. From Mike's screen trace to Sarah's 6-minute close.</p>
-    <button class="pulse-btn bg-brand-red text-white px-6 py-2.5 rounded-md text-sm font-semibold" onclick="document.getElementById('run-again').click()">&#8635; Run again</button>
-  </div>`;
-}
-
-// ============= INIT =============
-renderPillarGrid();
+render();
 </script>
 </body>
 </html>
